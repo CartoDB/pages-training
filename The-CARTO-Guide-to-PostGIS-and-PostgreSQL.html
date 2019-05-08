@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>The-CARTO-Guide-to-PostGIS-and-PostgreSQL</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0">🐘 The CARTO Guide to PostGIS and PostgreSQL</h1>
+
+<p>[ ] Add in <code>FILTER</code></p>
+
+<h1 id="toc_1">Overview</h1>
+
+<p>Welcome to the CARTO Guide to PostGIS and PostgreSQL. Both of these skills are some of the most valuable and useful you can learn at CARTO for working with geospatial and other data. This guide is mean to be tactical, allowing you to review and find specific things that you need, and assumes a basic knowledge of SQL and PostGIS. </p>
+
+<p>To learn more about PostgreSQL go <a href="http://www.postgresqltutorial.com/what-is-postgresql/">here</a> and to learn more about PostGIS go here.</p>
+
+<p>As you are likely aware, CARTO is built on a PostGIS/PostgreSQL database. All this means is that your data is stored in tables and you can query them using SQL commands. This makes our database very flexible and easy to use.</p>
+
+<p>You can also store non-spatial data in CARTO and use that as well. Just upload it and it will work just like any other table. What makes it a spatial table is a geometry (line, point, or polygon). This is stored in many formats, and CARTO will take this in, and create two columns from that geometry: <code>the_geom</code> and <code>the_geom_webmercator</code>.</p>
+
+<p>These both store the same data, but one allows us to render the map in the correct projection of our basemaps (<code>the_geom_webmercator</code>) and the other is used for everything else. <code>the_geom</code> uses the <a href="https://epsg.io/4326">WGS 84 projection system</a> and <code>the_geom_webmercator</code> uses <a href="https://epsg.io/3857">Google Web Mercator</a> which is the standard for web maps.</p>
+
+<h2 id="toc_2">The CARTO Trinity</h2>
+
+<p>In every dataset you must have the three following columns, <strong>without exception,</strong> to render a map in CARTO:</p>
+
+<ol>
+<li><code>the_geom</code></li>
+<li><code>the_geom_webmercator</code></li>
+<li><code>cartodb_id</code></li>
+</ol>
+
+<p>Make sure that every query includes these columns if you are planning on rendering data. If you aren’t then you don’t need them. If you are missing any of them, you will definitely see an error.</p>
+
+<h2 id="toc_3">The Most Basic Query</h2>
+
+<p>Whenever you open a dataset in CARTO you will see the following query show up:</p>
+
+<div><pre><code class="language-none">SELECT * FROM tablename</code></pre></div>
+
+<p>This is the foundation of every single query in CARTO, and in PostGIS/PostgreSQL. Let’s break it down:</p>
+
+<p><code>SELECT</code> is telling the query to retrieve something from the database and display it
+<code>*</code> is telling the query to grab all columns
+<code>FROM</code> is telling the query which table in your database to get the data from
+<code>tablename</code> is the specific table in the database that you are getting the data from.</p>
+
+<p>In this query you will return all rows and columns in that data table. Congrats! You just wrote your first query.</p>
+
+<p>You can also select specific columns like this:</p>
+
+<div><pre><code class="language-none">SELECT column_one FROM tablename</code></pre></div>
+
+<p>or this:</p>
+
+<div><pre><code class="language-none">SELECT column_one, column_two FROM tablename</code></pre></div>
+
+<p>These are the fundamentals of any SQL query. In the next section, we will learn how to filter your results using some basic SQL commands in PostgreSQL. </p>
+
+<h1 id="toc_4">The Basics</h1>
+
+<p>Now that you know how to return results from a table, let’s try out some conditional statements to filter the data that we want to see. As you go through these exercises you will see how CARTO filters and changes data and you should think about how this shows up in our products (how widgets work, how to create buffers, etc.). This will give you a much deeper understanding of how CARTO works.</p>
+
+<p>To test this you can use this dataset of <a href="https://team.carto.com/u/mforrest/dataset/accidents">rail accidents in the US</a></p>
+
+<h2 id="toc_5">WHERE</h2>
+
+<p>Let’s filter our data a bit. To show accidents that happened in Minnesota:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents WHERE state = &#39;Minnesota&#39;</code></pre></div>
+
+<p>Check out your results and they should only show results where the value in the <code>state</code> column corresponds to <code>Minnesota</code>. This is one of the most common operations in SQL. </p>
+
+<p>For numeric values you can use the following values as well <code>&lt;, &gt;, &gt;=, &lt;=, != (Not Equal)</code></p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-where/">More on</a> <code>[WHERE](http://www.postgresqltutorial.com/postgresql-where/)</code></p>
+
+<h2 id="toc_6">AND</h2>
+
+<p>But now you want to see more than one condition. Let’s use the <code>AND</code> operator and a numeric column:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE state = &#39;Minnesota&#39; 
+AND equipment_damage &gt; 1000000</code></pre></div>
+
+<p>This will return results in Minnesota with equipment damage over $1M. You can chain together as many <code>AND</code> statements as you want</p>
+
+<h2 id="toc_7">OR</h2>
+
+<p>Similar to <code>AND</code> you can use an <code>OR</code> statement, however this will include all values that meet both conditions. So for example this query:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE state = &#39;Minnesota&#39; 
+OR state = &#39;Wisconsin&#39;</code></pre></div>
+
+<p>This will return all results that are in Minnesota and Wisconsin. If you changed this to an <code>AND</code> query, you would see no results since there are no values in both states.</p>
+
+<h2 id="toc_8">ORDER BY</h2>
+
+<p>Now let’s order our data. Let’s run this query but we should add an <code>ORDER BY</code> statement:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE state = &#39;Minnesota&#39; 
+AND equipment_damage &gt; 1000000
+ORDER BY equipment_damage DESC</code></pre></div>
+
+<p>This will order the data by the values in the <code>equipment_damage</code> column in descending order. You can also use <code>ASC</code> to order it in ascending order.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-order-by/">More on</a> <code>[ORDER BY](http://www.postgresqltutorial.com/postgresql-order-by/)</code></p>
+
+<h2 id="toc_9">DISTINCT</h2>
+
+<p>You can also grab distinct values from a dataset. For example this query:</p>
+
+<div><pre><code class="language-none">SELECT DISTINCT state FROM accidents </code></pre></div>
+
+<p>Will return a list of distinct values in the state column. You can also use this in this format</p>
+
+<div><pre><code class="language-none">SELECT DISTINCT * FROM accidents </code></pre></div>
+
+<p>Which will remove duplicate values from your dataset, although there are no duplicates in this particular dataset.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-select-distinct/">More on</a> <code>[DISTINCT](http://www.postgresqltutorial.com/postgresql-select-distinct/)</code></p>
+
+<h2 id="toc_10">IN</h2>
+
+<p>We can also find multiple values from one column using the <code>IN</code> method:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE state IN (&#39;Minnesota&#39;, &#39;Wisconsin&#39;, &#39;Iowa&#39;, &#39;Illinois&#39;)</code></pre></div>
+
+<p>This will return all the results within that query, so any value where <code>state</code> is equal to <code>&#39;Minnesota&#39;, &#39;Wisconsin&#39;, &#39;Iowa&#39;, &#39;Illinois</code><code>&#39;</code></p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-in/">More on</a> <code>[IN](http://www.postgresqltutorial.com/postgresql-in/)</code></p>
+
+<h2 id="toc_11">BETWEEN</h2>
+
+<p>We can find values that fall between two other values using the <code>BETWEEN</code> method:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE total_damage 
+BETWEEN 1000000 AND 3000000</code></pre></div>
+
+<p>You can also do this for date ranges:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE date 
+BETWEEN &#39;2010-07-01T00:00:00Z&#39; AND &#39;2010-12-31T00:00:00Z&#39;</code></pre></div>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-between/">More on</a> <code>[BETWEEN](http://www.postgresqltutorial.com/postgresql-between/)</code></p>
+
+<h2 id="toc_12">LIKE &amp; ILIKE</h2>
+
+<p>Let’s say you want to search text values in a specific column but don’t want to find an exact match, just if a specific phrase or word is contained in some text. In this dataset we have the <code>narrative</code> column that has a long paragraph about what caused the accident. Let’s look for values that contain the word ‘SPEED’:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE narrative 
+LIKE &#39;%SPEED%&#39;</code></pre></div>
+
+<p>This will return all results that have the word ‘SPEED’ within the text in the <code>narrative</code> column</p>
+
+<p>There are several pattern matching methods that you can use to match different parts of the text:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE narrative 
+LIKE &#39;SPEED&#39;</code></pre></div>
+
+<p>This query will return no results since it is looking for text that matches ‘SPEED’ exactly.</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE narrative 
+LIKE &#39;SPEED%&#39;</code></pre></div>
+
+<p>This returns one results since it looks for values that start with ‘SPEED’ and has any other text after. In reverse:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE narrative 
+LIKE &#39;%SPEED&#39;</code></pre></div>
+
+<p>This will look for results that end with ‘SPEED’ of which there are none in this dataset.</p>
+
+<p>Our original query looks for the word ‘SPEED’ in any part of the string. To look for the word ‘SPEED’ at the beginning, end, and middle, we can use an <code>OR</code> statement</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE narrative 
+LIKE &#39;%SPEED&#39;
+OR narrative LIKE &#39;SPEED%&#39;
+OR narrative LIKE &#39;%SPEED%&#39;</code></pre></div>
+
+<p>Additionally you can use <code>NOT LIKE</code> as well to exclude results:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE narrative 
+NOT LIKE &#39;%SPEED%&#39;</code></pre></div>
+
+<p><code>ILIKE</code> is another version of <code>LIKE</code>, which is the same, but it is <strong>not case sensitive,</strong> whereas <code>LIKE</code> is <strong>case sensitive.</strong> For example:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE narrative 
+ILIKE &#39;%speed%&#39;</code></pre></div>
+
+<p>Will return the same results as our original query, however this query will return no results:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE narrative 
+LIKE &#39;%speed%&#39;</code></pre></div>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-like/">More on</a> <code>[LIKE](http://www.postgresqltutorial.com/postgresql-like/)</code> <a href="http://www.postgresqltutorial.com/postgresql-like/">and</a> <code>[ILIKE](http://www.postgresqltutorial.com/postgresql-like/)</code></p>
+
+<h2 id="toc_13">LIMIT</h2>
+
+<p>You can also limit the number of results you return using a <code>LIMIT</code> statement:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+LIMIT 5</code></pre></div>
+
+<p>This should return only 5 rows. A <code>LIMIT</code> statement always goes at the end of a statement. For example:</p>
+
+<div><pre><code class="language-none">SELECT * FROM accidents 
+WHERE state = &#39;Minnesota&#39;
+AND narrative LIKE &#39;%SPEED%&#39;
+LIMIT 5</code></pre></div>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-limit/">More on</a> <code>[LIMIT](http://www.postgresqltutorial.com/postgresql-limit/)</code></p>
+
+<h1 id="toc_14">Aggregations &amp; Transformations</h1>
+
+<p>Now we have the basics for querying and organizing our data. Next we can start to aggregate and transform our data. Let’s look at some basic aggregations and transformations.</p>
+
+<h2 id="toc_15">SUM, AVG, MIN, MAX, COUNT</h2>
+
+<p>Let’s run the following query:</p>
+
+<div><pre><code class="language-none">SELECT SUM(total_damage) 
+FROM accidents </code></pre></div>
+
+<p>This should return a value of 1,441,014,085 which is the sum of the <code>total_damage</code> column. Great! We just did a simple math operation in PostgreSQL. You can do the same with the following values:</p>
+
+<ul>
+<li><code>MIN</code> - returns the minimum value from the column selected</li>
+<li><code>MAX</code> - returns the maximum value from the column selected</li>
+<li><code>AVG</code> - returns the average value from the column selects</li>
+</ul>
+
+<p>You can also see the count of all the attributes in your table by running this query:</p>
+
+<div><pre><code class="language-none">SELECT COUNT(*) 
+FROM accidents </code></pre></div>
+
+<p>Great! That gives us the count. We can also rename our columns if we want to get multiple aggregation values:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage) as sum_of_total_damage,
+SUM(equipment_damage) as sum_of_equipment_damage
+FROM accidents </code></pre></div>
+
+<p>Give this a shot for a few values and methods. You can also do some simple math in your query which will work with common math operators:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage) + SUM(equipment_damage) as equipment_plus_total_damage
+FROM accidents </code></pre></div>
+
+<p>But let’s say we want to see the sum of <code>total_damage</code> in each state. We could try:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage),
+state
+FROM accidents </code></pre></div>
+
+<p>And we would get an error:</p>
+
+<p><code>Syntax error: column &quot;accidents.state&quot; must appear in the GROUP BY clause or be used in an aggregate function</code></p>
+
+<h2 id="toc_16">GROUP BY</h2>
+
+<p>Now we can introduce the <code>GROUP BY</code> method which allows you to group by a specific value in your data and which works similarly to a <code>SELECT DISTINCT</code> statement. Let’s give it a shot:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage),
+state
+FROM accidents 
+GROUP BY state</code></pre></div>
+
+<p>This should return a list of every state and the sum of the total damage in each state. Let’s order it so we can see the list in descending order:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage),
+state
+FROM accidents 
+GROUP BY state
+ORDER BY sum DESC</code></pre></div>
+
+<p>Great! You can change this to <code>MIN</code>, <code>MAX</code>, and <code>AVG</code> as well, or change the grouping column to something else (give <code>railroad</code> a try).</p>
+
+<h2 id="toc_17">CONCAT</h2>
+
+<p>Now let’s get into some more advanced data manipulation. These next functions will allow us to manipulate and format our data in a variety of ways so that we can create columns and data to fit our specific needs.</p>
+
+<p>The first is <code>CONCAT</code> which will allow us to manipulate and join strings together in a new column of data. Let’s try this with an example.</p>
+
+<div><pre><code class="language-none">SELECT 
+CONCAT(
+  &#39;RR: &#39;,
+  railroad,
+  &#39; / Accident Type: &#39;,
+  accident_type                  
+)
+FROM accidents</code></pre></div>
+
+<p>This should return a value that looks like this:</p>
+
+<p><code>RR: SEPA / Accident Type: Fire/violent rupture</code> </p>
+
+<p>Basically what we did is joined our values together with some text using the concat function:</p>
+
+<p><code>&#39;</code><code>RR:</code> <code>&#39;</code> <code>+ {railroad} +</code> <code>&#39;</code> <code>/ Accident Type</code> <code>&#39;</code> <code>+ {accident_type}</code> </p>
+
+<p>You can join as many columns or values as you want, just keep adding a comma after each value and make sure to have your spacing correct (notice the spaces within the quotes). We also manually wrote in string values here and contained them within quotes (i.e. <code>&#39; / Accident Type:</code> <code>&#39;</code>). This is totally valid and allows you to template the data in your query a bit. Let’s combine this with a <code>GROUP BY</code> and <code>SUM</code>:</p>
+
+<div><pre><code class="language-none">SELECT 
+CONCAT(
+  state, 
+    &#39; has $&#39;,
+    SUM(total_damage),
+    &#39; in total damage&#39;
+)
+FROM accidents 
+GROUP BY state
+ORDER BY concat ASC</code></pre></div>
+
+<p>This should return:</p>
+
+<p><code>Alabama has $25805738 in total damage</code>
+<code>Alaska has $493564 in total damage</code>
+etc…</p>
+
+<p>Great! Try this out a few different times with different values to practice this method as many of the other functions we are about to review use a very similar methodology.</p>
+
+<h2 id="toc_18">TO_CHAR</h2>
+
+<p>We can transform numeric and date variables into formatted text fields using <code>TO_CHAR</code> like this:</p>
+
+<div><pre><code class="language-none">SELECT
+TO_CHAR(total_damage, &#39;999,999,999,999.99&#39;)
+FROM accidents</code></pre></div>
+
+<p>This should return a field that has a text value of <code>total_damage</code> represented as a string with commas:</p>
+
+<p><code>11,293.00</code></p>
+
+<p>You can do the same with date variables as well:</p>
+
+<div><pre><code class="language-none">SELECT
+TO_CHAR(date, &#39;Mon-DD-YYYY&#39;)
+FROM accidents</code></pre></div>
+
+<p>Which will return a date like this:</p>
+
+<p><code>Oct-11-2011</code></p>
+
+<p>There are many different ways to format data using <code>TO_CHAR</code> so it is worth reading and testing out different options:</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-to_char/">More on</a> <code>[TO_CHAR](http://www.postgresqltutorial.com/postgresql-to_char/)</code></p>
+
+<h2 id="toc_19">TO_DATE</h2>
+
+<p>The <code>TO_DATE</code> function will allow you to transform a text field to a date timestamp:</p>
+
+<div><pre><code class="language-none">SELECT
+TO_DATE(month, &#39;YY-Mon&#39;)
+FROM accidents</code></pre></div>
+
+<p>This will return something like this: </p>
+
+<p><code>2011-10-01T00:00:00Z</code></p>
+
+<p>We will learn more about data formats soon but a date field is a specific type of data that we use for dates and times.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-to_date">More on</a> <code>[TO_DATE](http://www.postgresqltutorial.com/postgresql-to_date)</code></p>
+
+<h2 id="toc_20">TO_NUMBER</h2>
+
+<p>What if we need to turn a string text variable into a number:</p>
+
+<div><pre><code class="language-none">SELECT
+TO_NUMBER(year, &#39;9999&#39;)
+FROM accidents</code></pre></div>
+
+<p>This should return the same thing, but as a number. You can do this with any text field, for example:</p>
+
+<div><pre><code class="language-none">SELECT
+TO_NUMBER(&#39;123,456,789&#39;, &#39;99999999999&#39;)</code></pre></div>
+
+<p>Will perform the same operation.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-to_number">More on</a> <code>[TO_NUMBER](http://www.postgresqltutorial.com/postgresql-to_number)</code>
+<a href="http://www.postgresqltutorial.com/postgresql-to_date"></a></p>
+
+<h2 id="toc_21">ROUND</h2>
+
+<p>If you need to round a numeric variable you can use <code>ROUND</code>:</p>
+
+<div><pre><code class="language-none">SELECT
+ROUND(random)
+FROM accidents</code></pre></div>
+
+<p>You can also specify the number of decimal places:</p>
+
+<div><pre><code class="language-none">SELECT
+ROUND(random, 2)
+FROM accidents</code></pre></div>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-round/">More on</a> <code>[ROUND](http://www.postgresqltutorial.com/postgresql-round/)</code></p>
+
+<h2 id="toc_22">CEIL</h2>
+
+<p>Similarly to <code>ROUND</code> you can use <code>CEIL</code> to round up:</p>
+
+<div><pre><code class="language-none">SELECT
+CEIL(random)
+FROM accidents</code></pre></div>
+
+<p>This will round up but only to the nearest full integer.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-ceil/">More on</a> <code>[CEIL](http://www.postgresqltutorial.com/postgresql-ceil/)</code></p>
+
+<h2 id="toc_23">TRUNC</h2>
+
+<p><code>TRUNC</code> will truncate your numeric value in any specific direction. For example to truncate your number to two decimal places you can run this query:</p>
+
+<div><pre><code class="language-none">SELECT
+TRUNC(random, 2)
+FROM accidents</code></pre></div>
+
+<p>This will also work for numbers before the decimal by using a negative value:</p>
+
+<div><pre><code class="language-none">SELECT
+TRUNC(random, -3)
+FROM accidents</code></pre></div>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-trunc/">More on</a> <code>[TRUNC](http://www.postgresqltutorial.com/postgresql-trunc/)</code></p>
+
+<h2 id="toc_24">ARRAY_AGG</h2>
+
+<p>Let’s say that you want to see a list of the total damage of accidents over $5M, in each state,  and the companies that caused them. This sounds tricky, but using <code>ARRAY_AGG</code> we can do that like this:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage),
+state,
+ARRAY_AGG(railroad)
+FROM accidents 
+WHERE total_damage &gt; 5000000
+GROUP BY state
+ORDER BY sum DESC</code></pre></div>
+
+<p>Let’s look at one row of data from this query:</p>
+
+<table>
+<thead>
+<tr>
+<th><strong>sum</strong></th>
+<th><strong>state</strong></th>
+<th><strong>array_agg</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>30846938</td>
+<td>Missouri</td>
+<td>UP,BNSF,BNSF,KCS</td>
+</tr>
+</tbody>
+</table>
+
+<p>What we see here is the sum of the damage from accidents over $5M in Missouri and the companies responsible for those accidents, in this case UP, BNSF, BNSF (again) , and KCS</p>
+
+<p>What this does is it allows us to preserve other data in a field without doing two <code>GROUP BY</code> clauses. You can do this in <code>GROUP BY</code> but the results are much different:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage),
+state,
+railroad,
+cartodb_id
+FROM accidents 
+WHERE total_damage &gt; 5000000
+AND state = &#39;Missouri&#39;
+GROUP BY state, railroad, cartodb_id
+ORDER BY sum DESC</code></pre></div>
+
+<p>As you can see here we added the <code>cartodb_id</code> to ensure we got the individual accidents data back. Let’s look at the results, which we limited to accidents in Missouri.</p>
+
+<table>
+<thead>
+<tr>
+<th><strong>sum</strong></th>
+<th><strong>state</strong></th>
+<th><strong>array_agg</strong></th>
+<th><strong>cartodb_id</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>8686769</td>
+<td>Missouri</td>
+<td>UP</td>
+<td>3825</td>
+</tr>
+<tr>
+<td>8686769</td>
+<td>Missouri</td>
+<td>BNSF</td>
+<td>8724</td>
+</tr>
+<tr>
+<td>6736700</td>
+<td>Missouri</td>
+<td>KCS</td>
+<td>8906</td>
+</tr>
+<tr>
+<td>6736700</td>
+<td>Missouri</td>
+<td>BNSF</td>
+<td>2709</td>
+</tr>
+</tbody>
+</table>
+
+<p>This shows us the individual accidents so the <code>SUM</code> function is doing nothing here. It is the equivalent of writing this query:</p>
+
+<div><pre><code class="language-none">SELECT 
+total_damage,
+state,
+railroad,
+cartodb_id
+FROM accidents 
+WHERE total_damage &gt; 5000000
+AND state = &#39;Missouri&#39;
+ORDER BY total_damage DESC</code></pre></div>
+
+<p>We want to see the individual accidents <strong>and the total damage in the state.</strong> Let’s try this again, but with another function we already know:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage),
+state,
+ARRAY_AGG(
+  CONCAT(railroad, 
+         &#39;: $&#39;, 
+         TO_CHAR(total_damage, &#39;999,999,999,999&#39;)))
+FROM accidents 
+WHERE total_damage &gt; 5000000
+GROUP BY state
+ORDER BY sum DESC</code></pre></div>
+
+<p>Let’s check out our results for Missouri again:</p>
+
+<table>
+<thead>
+<tr>
+<th><strong>sum</strong></th>
+<th><strong>state</strong></th>
+<th><strong>array_agg</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>30846938</td>
+<td>Missouri</td>
+<td>UP: $ 8,686,769,</td>
+</tr>
+</tbody>
+</table>
+
+<p>BNSF: $ 8,686,769,
+BNSF: $ 6,736,700,
+KCS: $ 6,736,700 |</p>
+
+<p>Awesome! We have the sum of the total damage of all accidents in Missouri.</p>
+
+<p>We can do this with any sort of data. Let’s take a look at two other aggregation methods.</p>
+
+<h2 id="toc_25">STRING_AGG</h2>
+
+<p>The <code>STRING_AGG</code> function is more or less the same as <code>ARRAY_AGG</code> but you can choose the formatting for how you separate the elements in your array. Such as:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage),
+state,
+STRING_AGG(
+  CONCAT(railroad, 
+         &#39;: $&#39;, 
+         TO_CHAR(
+           total_damage, &#39;999,999,999,999&#39;)
+          ),
+        &#39; || &#39;)
+FROM accidents 
+WHERE total_damage &gt; 5000000
+GROUP BY state
+ORDER BY sum DESC</code></pre></div>
+
+<p>This will return:</p>
+
+<table>
+<thead>
+<tr>
+<th><strong>sum</strong></th>
+<th><strong>state</strong></th>
+<th><strong>array_agg</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>30846938</td>
+<td>Missouri</td>
+<td>UP: $       8,686,769</td>
+</tr>
+</tbody>
+</table>
+
+<p>This is somewhere where you can embed HTML elements if you are building an interactive map or table. For example:</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage),
+state,
+STRING_AGG(
+  CONCAT(&#39;&lt;p&gt;&#39;,
+         railroad, 
+         &#39;: $&#39;, 
+         TO_CHAR(
+           total_damage, &#39;999,999,999,999&#39;),
+         &#39;&lt;/p&gt;&#39;
+          ),
+        &#39;&lt;/p&gt;&lt;p&gt;&#39;)
+FROM accidents 
+WHERE total_damage &gt; 5000000
+GROUP BY state
+ORDER BY sum DESC</code></pre></div>
+
+<p>Will return:</p>
+
+<table>
+<thead>
+<tr>
+<th><strong>sum</strong></th>
+<th><strong>state</strong></th>
+<th><strong>array_agg</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>30846938</td>
+<td>Missouri</td>
+<td><p>UP: $       8,686,769</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><br />
+<p>BNSF: $       8,686,769</p>
+<br />
+<p>BNSF: $       6,736,700</p>
+<br />
+<p>KCS: $       6,736,700</p> |</p>
+
+<h2 id="toc_26">JSON_AGG</h2>
+
+<p>Just like the other functions, <code>JSON_AGG</code> returns data but in JSON format. This is useful when making requests to the CARTO SQL API.</p>
+
+<div><pre><code class="language-none">SELECT 
+SUM(total_damage),
+state,
+JSON_AGG(
+  CONCAT(railroad, 
+         &#39;: $&#39;, 
+         total_damage
+        )
+      )
+FROM accidents 
+WHERE total_damage &gt; 5000000
+GROUP BY state
+ORDER BY sum DESC</code></pre></div>
+
+<p>This query will return the following results from the SQL API (in JSON format)</p>
+
+<div><pre><code class="language-none">...
+{
+    - sum: 30846938,
+    - state: &quot;Missouri&quot;,
+    - json_agg: 
+    - [
+      - &quot;UP: $8686769&quot;,
+      - &quot;BNSF: $8686769&quot;,
+      - &quot;BNSF: $6736700&quot;,
+      - &quot;KCS: $6736700&quot;
+    - ]
+},
+{
+    - sum: 23459246,
+    - state: &quot;Oklahoma&quot;,
+    - json_agg: 
+    - [
+      - &quot;UP: $11729623&quot;,
+      - &quot;UP: $11729623&quot;
+    - ]
+},
+...</code></pre></div>
+
+<p>This makes it very useful especially when using the SQL API in a Javascript application.</p>
+
+<h2 id="toc_27">Data Types &amp; Casting</h2>
+
+<p>There are many, many, many different data types that you can store in PostgreSQL. <a href="http://www.postgresqltutorial.com/postgresql-data-types/">Here is a list of a few of them</a>. In CARTO there are a few that you will be dealing with a lot:</p>
+
+<ul>
+<li><code>numeric</code>: Numeric falue</li>
+<li><code>text</code>: Text or string value</li>
+<li><code>geometry</code>: Geometry for a geographic feature</li>
+<li><code>boolean</code>: True or False value</li>
+<li><code>date</code>: Date/Time</li>
+</ul>
+
+<p>You can set the value of any column at any time as we will learn shortly, or you can cast it to a specific data type within a query, although this will only stay that way in the context of the query:</p>
+
+<div><pre><code class="language-none">SELECT 
+equipment_damage::text,
+year::numeric
+FROM accidents</code></pre></div>
+
+<p>This effectively changed the <code>equipment_damage</code> column to a text value and the <code>year</code> column to a numeric value. This comes in handy when you need to easily change data in the context of a query, but not on the core dataset.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-cast/">More on Casting</a></p>
+
+<h2 id="toc_28">CASE/WHEN</h2>
+
+<p>Another handy function is to use <code>CASE</code> and <code>WHEN</code> as a conditional operation. Let’s say we want to add a numeric value to our dataset based on the <code>cause</code> column:</p>
+
+<div><pre><code class="language-none">SELECT
+cause,
+CASE 
+  WHEN cause = &#39;Signal and Communication&#39; THEN 2
+  WHEN cause = &#39;Mechanical and Electrical Failures&#39; THEN 1
+  WHEN cause = &#39;Rack, Roadbed and Structures&#39; THEN 3
+  ELSE 0
+END as rating
+FROM accidents</code></pre></div>
+
+<p>This will set each value that matched the condition to a number that we give it, for all other values that don’t match the condition, it will return 0.</p>
+
+<p>| Rack, Roadbed and Structures              | 3 |
+| ----------------------------------------- | - |
+| Signal and Communication                  | 2 |
+| Mechanical and Electrical Failures        | 1 |
+| Train operation - Human Factors           | 0 |
+| Miscellaneous Causes Not Otherwise Listed | 0 |</p>
+
+<p>This is a very helpful function for classifying and creating conditional logic in your dataset.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-case/">More on</a> <code>[CASE](http://www.postgresqltutorial.com/postgresql-case/)</code></p>
+
+<h2 id="toc_29">NULL Values</h2>
+
+<p>Many times in your data you will see the word <code>null</code> which basically means there is no data in that cell. This works fine for text fields, but for numbers you will want to change this. We can actually do that with an <code>UPDATE</code> statement, which we will learn about in the next section!</p>
+
+<h1 id="toc_30">More Advanced Operations</h1>
+
+<p>So far we have only been running <code>SELECT</code> statements which allows us to query and filter or data, but not modify it at all. Let’s learn some new operations to modify our data with SQL.</p>
+
+<blockquote>
+<p>⚠️ <strong>NOTE: All these statements will change the dataset you are testing them on. You should create a copy of your dataset to run these queries ⚠️</strong> </p>
+
+<h2 id="toc_31">UPDATE</h2>
+</blockquote>
+
+<p>The first new statement we will look at is an update statement:</p>
+
+<div><pre><code class="language-none">UPDATE accidents
+SET railroad = &#39;No Value&#39;</code></pre></div>
+
+<p>This statement would set all the values in the <code>railroad</code> column equal to ‘No Value’. This also works with conditionals:</p>
+
+<div><pre><code class="language-none">UPDATE accidents
+SET railroad = &#39;Union Pacific&#39;
+WHERE railroad = &#39;UP&#39;</code></pre></div>
+
+<p>Which would only change the value for rows where <code>railroad</code> was equal to ‘UP’</p>
+
+<p>This statement <strong>would change your data completely</strong> and there are no redos here so <strong>make sure this is what you want to do.</strong> The recommended path is to create a new column which we will learn about in the <code>ALTER TABLE</code> command shortly and update that new column with the update statement:</p>
+
+<div><pre><code class="language-none">UPDATE accidents
+SET railroad_new = &#39;Union Pacific&#39;
+WHERE railroad = &#39;UP&#39;</code></pre></div>
+
+<p>You can also use another table to update values in the table you are working on:</p>
+
+<div><pre><code class="language-none">UPDATE accidents
+SET railroad_new = accidents_new.railroad_names
+FROM accidents_new
+WHERE accidents_new.railroad_names = accidents.railroad</code></pre></div>
+
+<p>This is also another important concept. You will see this reference in the query <code>accidents.railroad</code> which is referencing a column in the <code>accidents</code> dataset. It follows this format: <code>{tablename}.{columnname}</code> which allows you to reference two tables as we are doing above. We are:</p>
+
+<ul>
+<li><code>UPDATE</code>-ing the <code>accidents</code> table</li>
+<li>With values that are <code>FROM</code> the <code>accidents_new</code> table</li>
+</ul>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-update/">More on</a> <code>[UPDATE](http://www.postgresqltutorial.com/postgresql-update/)</code></p>
+
+<h2 id="toc_32">INSERT</h2>
+
+<p>You can also run an <code>INSERT</code> statement on your table which will add new values to the table:</p>
+
+<div><pre><code class="language-none">INSERT INTO accidents (railroad, total_damage)
+VALUES (&#39;UP&#39;, 100000)</code></pre></div>
+
+<p>This is a direct insert statement but you can also run the following statement to get values from another table:</p>
+
+<div><pre><code class="language-none">INSERT INTO accidents (railroad, total_damage)
+SELECT railroad, total_damage
+FROM accidents_new</code></pre></div>
+
+<p>Or you can add a <code>WHERE</code> statement here as well:</p>
+
+<div><pre><code class="language-none">INSERT INTO accidents (railroad, total_damage)
+SELECT railroad, total_damage
+FROM accidents_new
+WHERE accidents_new.railroad = &#39;UP&#39;</code></pre></div>
+
+<p>You can also run a conditional <code>INSERT</code></p>
+
+<div><pre><code class="language-none">INSERT INTO accidents (railroad, total_damage)
+SELECT railroad, total_damage
+FROM accidents_new
+WHERE accidents_new.railroad = &#39;UP&#39;
+ON CONFLICT (railroad)
+DO NOTHING</code></pre></div>
+
+<p>This will tell the query to do nothing if there is a <code>railroad</code> value that is equal to ‘UP’</p>
+
+<p>You can also run a conditional update:</p>
+
+<div><pre><code class="language-none">INSERT INTO accidents (railroad, cause)
+SELECT railroad, cause
+FROM accidents_new
+WHERE accidents_new.railroad = &#39;UP&#39;
+ON CONFLICT (railroad)
+DO 
+  UPDATE
+    SET cause = EXCLUDED.cause || &#39;, &#39; || accidents.cause</code></pre></div>
+
+<p>For that result it would concatenate the <code>cause</code> column so before the insert it would look like</p>
+
+<p><code>&#39;</code><code>Train problem</code><code>&#39;</code></p>
+
+<p>And after it would look like</p>
+
+<p><code>&#39;Train problem</code><code>&#39;</code><code>,</code> <code>&#39;</code><code>Radio issue</code><code>&#39;</code></p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-insert/">More on</a> <code>[INSERT](http://www.postgresqltutorial.com/postgresql-insert/)</code>
+<a href="http://www.postgresqltutorial.com/postgresql-upsert/">More on conditional</a> <code>[INSERT](http://www.postgresqltutorial.com/postgresql-upsert/)</code></p>
+
+<h2 id="toc_33">ALTER TABLE</h2>
+
+<p>The <code>ALTER TABLE</code> function allows you to modify the structure of a table completely. There are many different actions you can use with <code>ALTER TABLE</code>.</p>
+
+<div><pre><code class="language-none">ALTER TABLE accidents
+ADD COLUMN description TEXT,
+ADD COLUMN cost_of_accident NUMERIC</code></pre></div>
+
+<p>Obviously <code>ADD COLUMN</code> will add a new column with a column name and the data type following it.</p>
+
+<div><pre><code class="language-none">ALTER TABLE accidents
+DROP COLUMN description TEXT,
+DROP COLUMN cost_of_accident NUMERIC</code></pre></div>
+
+<p>And you can easily remove a column using <code>DROP COLUMN</code></p>
+
+<div><pre><code class="language-none">ALTER TABLE accidents
+RENAME COLUMN description TO some_description,
+RENAME COLUMN cost_of_accident TO accident_cost</code></pre></div>
+
+<p>Or rename your column with <code>RENAME COLUMN</code></p>
+
+<div><pre><code class="language-none">ALTER TABLE accidents
+ADD CONSTRAINT valid_equipment_damage 
+CHECK (
+  total_damage &gt; 0
+  AND equipment_damage &gt;= 0
+  AND equipment_damage &lt;= total_damage
+)</code></pre></div>
+
+<p>We can also add a <code>[CHECK](http://www.postgresqltutorial.com/postgresql-check-constraint/)</code> constraint to our table which will validate inserted or updated data. This adds rules to our table so if a value is <code>INSERT</code>-ed or <code>UPDATE</code>-d on <code>equipment_damage</code> it must:</p>
+
+<ul>
+<li>Have a <code>total_damage</code> greater than 0</li>
+<li>Have an <code>equipment_damage</code> greater than or equal to 0</li>
+<li><p>And <code>total_damage</code> must be greater than or equal to <code>equipment_damage</code></p>
+
+<p>ALTER TABLE accidents
+RENAME TO accidents_other</p></li>
+</ul>
+
+<p>And you can rename your table as well.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-alter-table/">More on</a> <code>[ALTER TABLE](http://www.postgresqltutorial.com/postgresql-alter-table/)</code></p>
+
+<h2 id="toc_34">CREATE TABLE</h2>
+
+<p>You can also create tables from other queries using the <code>CREATE TABLE</code> syntax:</p>
+
+<div><pre><code class="language-none">CREATE TABLE up_accidents AS
+SELECT * 
+FROM accidents
+WHERE railroad = &#39;UP&#39;</code></pre></div>
+
+<p>This will create a new table called <code>up_accidents</code> from the results of the query which will show only accidents associated with &#39;UP’.</p>
+
+<p>This is a <strong>very useful query</strong> to create derivative data based on a larger query that may timeout in a standard <code>SELECT</code> statement.</p>
+
+<p>However in CARTO this will only show up on the database. To get it to show up in the user interface you need to run this query as well:</p>
+
+<div><pre><code class="language-none">SELECT 
+cdb_cartodbfytable(&#39;user_name&#39;, &#39;up_accidents&#39;)</code></pre></div>
+
+<p>Run that query once and your table will show up.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-create-table/">More on</a> <code>[CREATE TABLE](http://www.postgresqltutorial.com/postgresql-create-table/)</code></p>
+
+<h2 id="toc_35">JOINS</h2>
+
+<p>Joins are a big and somewhat complex topic. This is basically joining one set of values from one table to another set of values from a different table based on some sort of condition. Let’s take a look at a few different types of joins.</p>
+
+<ul>
+<li><code>INNER JOIN</code>: Will return the records where <em>table1</em> and <em>table2</em> intersect</li>
+<li><code>LEFT JOIN</code>: Will return the all records from <em>table1</em> and only those records from <em>table2</em> that intersect with <em>table1</em></li>
+<li><code>RIGHT JOIN</code>: Will return the all records from <em>table2</em> and only those records from <em>table1</em> that intersect with <em>table2</em>.</li>
+<li><code>FULL OUTER JOIN</code>: Will return the all records from both <em>table1</em> and <em>table2</em></li>
+<li><code>CROSS JOIN</code>: Will join every value from <em>table1</em> to all other values of <em>table2</em></li>
+</ul>
+
+<p>We can use this table to test these out:</p>
+
+<p><a href="https://team.carto.com/u/mforrest/dataset/accident_types">accident_types</a></p>
+
+<p>The format for joins are for the most part the same:</p>
+
+<div><pre><code class="language-none">SELECT 
+  accidents.railroad,
+  accidents.accident_type,
+  accident_types.type,
+  accident_types.total_damage
+FROM
+  accidents
+INNER JOIN
+  accident_types ON type = accidents.accident_type</code></pre></div>
+
+<p>This will return all results from <code>accidents</code> which will have many repeat values from <code>accident_types</code></p>
+
+<p>You can also add conditionals</p>
+
+<div><pre><code class="language-none">SELECT 
+  accidents.railroad,
+  accidents.accident_type,
+  accident_types.type,
+  accident_types.total_damage
+FROM
+  accidents
+INNER JOIN
+  accident_types ON type = accidents.accident_type
+WHERE accident_types.total_damage &gt; 50000000</code></pre></div>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-inner-join/">More on</a> <code>[INNER JOIN](http://www.postgresqltutorial.com/postgresql-inner-join/)</code></p>
+
+<p>Now, since in each table there are the same set of values, each of these joins, apart from <code>CROSS JOIN</code> will more or less work the same way. For the most part <code>INNER JOIN</code> is the most common type of join used in CARTO. You can try each of these and find the best fit join for your data.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-left-join/">More on</a> <code>[LEFT JOIN](http://www.postgresqltutorial.com/postgresql-left-join/)</code>
+<a href="http://www.postgresqltutorial.com/postgresql-cross-join/">More on</a> <code>[CROSS JOIN](http://www.postgresqltutorial.com/postgresql-cross-join/)</code>
+<a href="http://www.postgresqltutorial.com/postgresql-full-outer-join/">More on</a> <code>[FULL OUTER JOIN](http://www.postgresqltutorial.com/postgresql-full-outer-join/)</code></p>
+
+<p>One very common way of using joins is to quickly query and join data to geometries. For example imagine that you have created your list of states grouped by total damage, and you want to join that to a datset of state boundaries. Let’s give that a shot using <a href="https://team.carto.com/u/mforrest/dataset/us_states">this dataset of states</a>.</p>
+
+<div><pre><code class="language-none">SELECT 
+  us_states.*,
+  sum(accidents.total_damage) as all_damage,
+  sum(accidents.equipment_damage) as equipment_damage
+FROM
+  accidents
+INNER JOIN
+  us_states ON us_states.state = accidents.state
+GROUP BY
+  us_states.state,
+  us_states.cartodb_id</code></pre></div>
+
+<p>This will return a joined dataset of all the columns from the <code>us_states</code> dataset using <code>us_states.*</code> and the sum of <code>total_damage</code> and <code>equipment_damage</code> from the <code>accidents</code> table. You could optionally use a <code>WHERE</code> clause in this query as well.</p>
+
+<h2 id="toc_36">UNION</h2>
+
+<p>Let’s say that you have two different tables with the exact same table structure, meaning you have the exact same number of columns, the column names and data types are the same, but the values are different. You can easily join them with a <code>UNION</code>:</p>
+
+<div><pre><code class="language-none">SELECT * FROM table_a
+UNION
+SELECT * FROM table_b
+UNION
+SELECT * FROM table_c</code></pre></div>
+
+<p>This joins all these tables together, so if each of the above tables has 100 rows, you would have a dataset with 300 rows with the above query.</p>
+
+<p>In CARTO however you will need the <code>cartodb_id</code> column, but if you have many tables with a <code>cartodb_id</code> you will get an error since the id must be a unique id, i.e. it must not repeat. So if there are two <code>cartodb_id</code>&#39;s with the same value you must reset them. You can do this like so:</p>
+
+<div><pre><code class="language-none">WITH a AS (
+SELECT
+  railroad,
+  total_damage,
+  state
+FROM accidents
+UNION
+SELECT
+  railroad,
+  total_damage,
+  state
+FROM accidents_new
+)
+SELECT 
+*,
+row_number() over() as cartodb_id
+FROM a</code></pre></div>
+
+<p>This introduces two concepts, the first is a nested table which we will cover in the next section. The other is this function:</p>
+
+<p><code>row_number() over() as cartodb_id</code></p>
+
+<p>This will create a new number and increase it by one as a new column called <code>cartodb_id</code>. This will work as long as you do not include the <code>cartodb_id</code> in your original query.</p>
+
+<h2 id="toc_37">Subqueries</h2>
+
+<p>As you have seen above you can use subqueries to query different tables, store the results of that query within the main query, and use them to do something else later. Let’s test this out:</p>
+
+<blockquote>
+<p>⚠️ Note that subqueries, or too many subqueries can degrade performance so try to use them only when necessary</p>
+</blockquote>
+
+<div><pre><code class="language-none">WITH a AS (
+SELECT
+  *
+FROM accidents
+WHERE total_damage &gt; 10000000
+)
+SELECT 
+  *
+FROM a</code></pre></div>
+
+<p>If you run this you will see results from accidents where <code>total_damage</code> is over $10M - however this data is now stored in a subquery with the table reference of <code>a</code> if we run this:</p>
+
+<div><pre><code class="language-none">WITH a AS (
+SELECT
+  *
+FROM accidents
+WHERE total_damage &gt; 10000000
+)
+SELECT 
+  *
+FROM a
+WHERE nearest_city = &#39;GOODWELL&#39;</code></pre></div>
+
+<p>We will see two rows, but the <code>WHERE</code> clause is being applied to the <code>a</code> table. You can also chain queries together:</p>
+
+<div><pre><code class="language-none">WITH a AS (
+SELECT
+  *
+FROM accidents
+WHERE total_damage &gt; 100000
+),
+b AS (
+SELECT
+  *
+FROM a
+WHERE year BETWEEN &#39;2010&#39; AND &#39;2012&#39;
+)
+SELECT 
+  *
+FROM b</code></pre></div>
+
+<p>This also works in queries like this:</p>
+
+<div><pre><code class="language-none">SELECT
+*
+FROM 
+us_states
+WHERE state IN 
+(SELECT state FROM accidents WHERE equipment_damage &gt; 5000000)</code></pre></div>
+
+<p>You can also use other methods such as <code>EXISTS</code>, <code>ANY</code>, or <code>ALL</code></p>
+
+<div><pre><code class="language-none">SELECT 
+*
+FROM 
+accidents
+WHERE EXISTS
+(SELECT 
+  type 
+FROM accident_types 
+WHERE total_damage &lt; 15000000 
+AND type = accidents.accident_type)
+
+
+SELECT 
+*
+FROM 
+accidents
+WHERE equipment_damage &gt;= ANY
+(SELECT total_damage FROM accident_types)</code></pre></div>
+
+<p>This subquery must return only one column</p>
+
+<p>This will select all the results from <code>accidents</code> that match the <code>type</code> from <code>accident_types</code> where the <code>total_damage</code> is over $15M. We can also use <code>ALL</code> in a very similar way.</p>
+
+<p><a href="http://www.postgresqltutorial.com/postgresql-subquery/">More on Subqueries</a>
+<a href="http://www.postgresqltutorial.com/postgresql-exists/">More on</a> <code>[EXISTS](http://www.postgresqltutorial.com/postgresql-exists/)</code>
+<a href="http://www.postgresqltutorial.com/postgresql-any/">More on</a> <code>[ANY](http://www.postgresqltutorial.com/postgresql-any/)</code>
+<a href="http://www.postgresqltutorial.com/postgresql-any/"></a><a href="http://www.postgresqltutorial.com/postgresql-all/">More on</a> <code>[ALL](http://www.postgresqltutorial.com/postgresql-all/)</code></p>
+
+<h2 id="toc_38">INDEX</h2>
+
+<p>Adding an <code>INDEX</code> to a table is a method that will help you quickly query your data by indexing values in that column. This helps speed up queries on the columns you are querying. This will help performance on querying large datasets.</p>
+
+<div><pre><code class="language-none">CREATE INDEX
+ON accidents
+(total_damage)</code></pre></div>
+
+<p>You can add an index for any column in your dataset but only add them for the columns you are going to query against.</p>
+
+<p>We are only scratching the surface of some of these topics and you can learn more in <a href="http://www.postgresqltutorial.com/">this set of guides</a>.</p>
+
+<h1 id="toc_39">PostGIS Functions &amp; Overview</h1>
+
+<p>As you have noticed we have not done much with PostGIS up to this point and that is because a good base in PostgreSQL will allow you to have a much better base of PostGIS. PostGIS itself is an extension of PostgreSQL that adds the ability to work with geometries in the database and perform different functions on the geometry column.</p>
+
+<p>CARTO stores two different geometry types as listed above and in this guide we will point out how to use and work with both, however the main one you will work with is called <code>the_geom</code>. This stores your geographic data in a PostGIS geometry format and we will use it to perform many different operations.</p>
+
+<p>First, let’s take a look at <code>the_geom</code> in our dataset of accidents:</p>
+
+<div><pre><code class="language-none">SELECT
+the_geom
+FROM accidents</code></pre></div>
+
+<p>You should see a pair of lat, long coordinates. If we try this:</p>
+
+<div><pre><code class="language-none">SELECT
+the_geom::geography
+FROM accidents</code></pre></div>
+
+<p>You will see something like this:</p>
+
+<p><code>0101000020E61000004FCE50DCF1BB52C0637C98BD6C1D4440</code></p>
+
+<p>This string represents the position of the geometry on the curved surface of the Earth, since the earth is our reference system. One could create a geogrpahy for anything (a baseball field, Mars, a house, etc.) but since we are dealing with the Earth, that is our geography system.</p>
+
+<h1 id="toc_40">Geometry Functions</h1>
+
+<h2 id="toc_41">ST_AsText</h2>
+
+<p>Now let’s try this:</p>
+
+<div><pre><code class="language-none">SELECT
+ST_AsText(the_geom)
+FROM accidents</code></pre></div>
+
+<p>This will return a plain text version of our geometry:</p>
+
+<p><code>POINT(-74.936637 40.229881)</code></p>
+
+<p>This is how PostGIS will read our geometry. There are many geometry types: <code>POINT</code>, <code>LINE</code>, <code>POLYGON</code>, <code>MULTILINESTRING</code>, <code>MULTIPOINT</code>, <code>MULTIPOLYGON</code>, and <code>GEOMETRYCOLLECTION</code>.</p>
+
+<p><code>ST_AsText</code> is very helpful when looking at your data and when using different functions.</p>
+
+<p><a href="https://postgis.net/docs/ST_AsText.html">More on</a> <code>[ST_AsText](https://postgis.net/docs/ST_AsText.html)</code></p>
+
+<h2 id="toc_42">ST_GeomFromText</h2>
+
+<p>You could do this in reverse and use text to generate a geometry such as:</p>
+
+<div><pre><code class="language-none">SELECT
+ST_GeomFromText(&#39;POINT(-74.936637 40.229881)&#39;)</code></pre></div>
+
+<p><a href="https://postgis.net/docs/ST_GeomFromText.html">More on</a> <code>[ST_GeomFromText](https://postgis.net/docs/ST_GeomFromText.html)</code></p>
+
+<h2 id="toc_43">ST_GeomFromGeoJSON</h2>
+
+<p>Or you can use GeoJSON which is a common format for </p>
+
+<div><pre><code class="language-none">SELECT
+ST_GeomFromText(&#39;{&quot;type&quot;:&quot;Point&quot;,&quot;coordinates&quot;:[-74.936637,40.229881]}&#39;)</code></pre></div>
+
+<p><a href="https://postgis.net/docs/ST_GeomFromGeoJSON.html">More on</a> <code>[ST_GeomFromGeoJSON](https://postgis.net/docs/ST_GeomFromGeoJSON.html)</code></p>
+
+<h2 id="toc_44">ST<em>MakePoint and ST</em>SetSRID</h2>
+
+<p>You can also create a point using <code>ST_MakePoint</code> and set the correct Projection System using <code>ST_SetSRID</code>:</p>
+
+<div><pre><code class="language-none">SELECT
+ST_SetSRID(ST_MakePoint(-74.936637, 40.229881), 4326) as the_geom</code></pre></div>
+
+<p>This is a useful function for insert statements.</p>
+
+<p><a href="https://postgis.net/docs/ST_MakePoint.html">More on</a> <code>[ST_MakePoint](https://postgis.net/docs/ST_MakePoint.html)</code>
+<a href="https://postgis.net/docs/ST_SetSRID.html">More on</a> <code>[ST_SetSRID](https://postgis.net/docs/ST_SetSRID.html)</code></p>
+
+<h2 id="toc_45">ST_MakeLine</h2>
+
+<p>Let’s make a line from a few of our points.</p>
+
+<div><pre><code class="language-none">WITH a AS (
+SELECT ARRAY_AGG(the_geom) AS the_geom 
+FROM accidents 
+WHERE cartodb_id BETWEEN 5 AND 10)
+
+SELECT ST_AsText(ST_MakeLine(the_geom)) 
+FROM a</code></pre></div>
+
+<p>This query will return a line from our points (as text). </p>
+
+<p>If we want to see it on the map we have to add a few more things that we already know about, and a few we don’t but we will see soon:</p>
+
+<div><pre><code class="language-none">WITH a AS (
+SELECT ARRAY_AGG(the_geom) AS the_geom 
+FROM accidents 
+WHERE cartodb_id BETWEEN 5 AND 10)
+
+SELECT 
+ST_MakeLine(the_geom) as the_geom,
+ST_Transform(ST_MakeLine(the_geom), 3857) as the_geom_webmercator,
+row_number() over() as cartodb_id
+FROM a</code></pre></div>
+
+<p>You will see <code>ST_Transform</code> here which is re-projecting our <code>the_geom</code> column into the format that <code>the_geom_webmercator</code> needs. If you remember this is one of the three columns CARTO needs to render a map. If we open this up in a map we will see the following:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1528490375672_Screen+Shot+2018-06-08+at+4.39.22+PM.png" alt=""></p>
+
+<p><a href="https://postgis.net/docs/ST_MakeLine.html">More on</a> <code>[ST_MakeLine](https://postgis.net/docs/ST_MakeLine.html)</code></p>
+
+<h2 id="toc_46">ST_Envelope</h2>
+
+<p>Now let’s try the same thing but for a bounding box around our points:</p>
+
+<div><pre><code class="language-none">WITH a AS (
+SELECT the_geom 
+FROM accidents 
+WHERE cartodb_id BETWEEN 5 AND 10)
+
+SELECT 
+ST_Envelope(ST_Collect(the_geom)) as the_geom,
+ST_Transform(ST_Envelope(ST_Collect(the_geom)), 3857) as the_geom_webmercator,
+row_number() over() as cartodb_id
+FROM a</code></pre></div>
+
+<p>This use a function called <code>ST_Envelope</code> which takes a collection of geometries, which is generated by <code>ST_Collect</code>. The result is:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1528491129790_Screen+Shot+2018-06-08+at+4.51.38+PM.png" alt=""></p>
+
+<p>This would work for lines and polygons as well.</p>
+
+<p><a href="https://postgis.net/docs/ST_Envelope.html">More on</a> <code>[ST_Envelope](https://postgis.net/docs/ST_Envelope.html)</code>
+<a href="https://postgis.net/docs/ST_Collect.html">More on</a> <code>[ST_Collect](https://postgis.net/docs/ST_Collect.html)</code></p>
+
+<h2 id="toc_47">ST_Intersects</h2>
+
+<p>Let’s say that you want to see which points intersect the boundary of Minnesota. You can use <code>ST_Intersects</code> to do so:</p>
+
+<div><pre><code class="language-none">SELECT 
+accidents.*
+FROM accidents, us_states
+WHERE ST_Intersects(accidents.the_geom, us_states.the_geom)
+AND us_states.state = &#39;Minnesota&#39;</code></pre></div>
+
+<p>This is a very common spatial analysis that you will come across again and again and is incredibly useful to see which locations intersect another location. With <code>ST_Intersects</code> there is some wiggle room to find things that are just touching the border of another feature, so there are other functions to find things that are completely contained by another feature.</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1530129333145_Screen+Shot+2018-06-27+at+3.55.23+PM.png" alt=""></p>
+
+<p><a href="https://postgis.net/docs/ST_Intersects.html">More on</a> <code>[ST_Intersects](https://postgis.net/docs/ST_Intersects.html)</code></p>
+
+<h2 id="toc_48">ST_MakeEnvelope</h2>
+
+<p>You can also make an envelope on the fly and find areas that intersect it with <code>ST_MakeEnvelope</code>:</p>
+
+<div><pre><code class="language-none">SELECT * 
+FROM accidents
+WHERE accidents.the_geom &amp;&amp; ST_MakeEnvelope(-97.6273,32.3811,-96.3858,33.2984, 4326)</code></pre></div>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1530133221121_Screen+Shot+2018-06-27+at+5.00.01+PM.png" alt=""></p>
+
+<h2 id="toc_49">ST_Within</h2>
+
+<p>While very similar to <code>ST_Intersects</code>, <code>ST_Within</code> will work only if all points or features are <strong>totally</strong> within another feature:</p>
+
+<div><pre><code class="language-none">SELECT 
+accidents.* 
+FROM accidents, us_states 
+WHERE ST_Within(accidents.the_geom, us_states.the_geom) 
+AND us_states.state = &#39;Minnesota&#39;</code></pre></div>
+
+<p><a href="https://postgis.net/docs/ST_Within.html">More on</a> <code>[ST_Within](https://postgis.net/docs/ST_Within.html)</code></p>
+
+<h2 id="toc_50">ST_Disjoint</h2>
+
+<p>What about finding things that are not within another feature. You can do so with <code>ST_Disjoint</code>:</p>
+
+<div><pre><code class="language-none">SELECT 
+accidents.* 
+FROM accidents, us_states 
+WHERE ST_Disjoint(us_states.the_geom, accidents.the_geom) 
+AND us_states.state = &#39;Minnesota&#39;</code></pre></div>
+
+<p><a href="https://postgis.net/docs/ST_Disjoint.html">More on</a> <code>[ST_Disjoint](https://postgis.net/docs/ST_Disjoint.html)</code></p>
+
+<h2 id="toc_51">ST_Union</h2>
+
+<p>What if you want to join several geometries together to make a region, like the Midwest. We can do that with <code>ST_Union</code>:</p>
+
+<div><pre><code class="language-none">SELECT 
+row_number() over() as cartodb_id,
+ST_Union(the_geom) as the_geom,
+ST_Union(the_geom_webmercator) as the_geom_webmercator
+FROM us_states 
+WHERE state IN (&#39;Minnesota&#39;, &#39;Wisconsin&#39;, &#39;Iowa&#39;, &#39;Illinois&#39;, &#39;Indiana&#39;, &#39;Ohio&#39;, &#39;Michigan&#39;)</code></pre></div>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537216631366_Screen+Shot+2018-09-17+at+4.36.54+PM.png" alt=""></p>
+
+<p><a href="http://www.postgis.net/docs/ST_Union.html">More on</a> <code>[ST_Union](http://www.postgis.net/docs/ST_Union.html)</code></p>
+
+<h2 id="toc_52">ST_Transform</h2>
+
+<p><code>ST_Transform</code> allows you to transform your data into different projections. CARTO displays it’s data in WGS 84 / Pseudo-Mercator or <a href="https://epsg.io/3857">EPSG:3857</a> (i.e. <code>the_geom</code>) and PostGIS (or <code>the_geom_webmercator</code>) uses WGS84 - World Geodetic System 1984 or <a href="https://epsg.io/4326">EPSG:4326</a>. However there are thousands and thousands of different projection types, each appropriate for different types of maps. You can read more about map projections <a href="https://en.wikipedia.org/wiki/Map_projection">here</a>.</p>
+
+<p>Let’s say that we wanted to reproject our data into the <a href="https://epsg.io/54030">Robinson Projection</a>. We can run this query:</p>
+
+<div><pre><code class="language-none">SELECT 
+cartodb_id,
+ST_Transform(the_geom, 54030) as the_geom,
+ST_Transform(the_geom_webmercator, 54030) as the_geom_webmercator
+FROM us_states</code></pre></div>
+
+<p>This allows us to reproject the data (but not the base map) so it looks like this:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537217221427_Screen+Shot+2018-09-17+at+4.46.48+PM.png" alt=""></p>
+
+<p><a href="https://epsg.io/54030">More on</a> <code>[ST_Transform](https://epsg.io/54030)</code></p>
+
+<h2 id="toc_53">ST_Centroid</h2>
+
+<p>What if you want to find the center point, or centroid, of a polygon? You can use <code>ST_Centroid</code>:</p>
+
+<div><pre><code class="language-none">SELECT 
+cartodb_id,
+ST_Centroid(the_geom) as the_geom,
+ST_Centroid(the_geom_webmercator) as the_geom_webmercator
+FROM us_states </code></pre></div>
+
+<p>Which results in a map that looks like this:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537217652342_Screen+Shot+2018-09-17+at+4.53.25+PM.png" alt=""></p>
+
+<p><a href="https://postgis.net/docs/ST_Centroid.html">More on</a> <code>[ST_Centroid](https://postgis.net/docs/ST_Centroid.html)</code></p>
+
+<h2 id="toc_54">ST_Distance</h2>
+
+<p>What if you want to find the distance between two points? Use <code>ST_Distance</code>:</p>
+
+<p><em>We are using a cross join of the same table to illustrate this example and we will use</em> <code>*the_geom_webmercator*</code> <em>since it returns meters as the unit of measurement.</em></p>
+
+<div><pre><code class="language-none">SELECT 
+a.cartodb_id as id_one,
+b.cartodb_id as id_two,
+ST_Distance(a.the_geom_webmercator, b.the_geom_webmercator) / 1609 as distance_miles
+FROM accidents a, accidents b</code></pre></div>
+
+<p>This returns a data table of distances (in miles since we are multiplying by 1609).</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537218398452_Screen+Shot+2018-09-17+at+5.05.51+PM.png" alt=""></p>
+
+<p><a href="https://postgis.net/docs/ST_Distance.html">More on</a> <code>[ST_Distance](https://postgis.net/docs/ST_Distance.html)</code></p>
+
+<h2 id="toc_55">ST_DWithin</h2>
+
+<p>Let’s say that you want to find the points that are within a specified distance of another geometry, you can use <code>ST_DWithin</code> to do that.</p>
+
+<div><pre><code class="language-none">WITH a AS (SELECT cartodb_id as id, the_geom_webmercator FROM accidents LIMIT 1)
+
+SELECT 
+a.id,
+accidents.cartodb_id,
+accidents.the_geom,
+accidents.the_geom_webmercator
+FROM a, accidents
+WHERE ST_DWithin(a.the_geom_webmercator, accidents.the_geom_webmercator, 1609 * 100) IS true</code></pre></div>
+
+<p>First we will create a subquery that will have a single point in it which we will measure from. Then we will compare the two points in the <code>WHERE</code> clause and give the function a distance to measure against (in this case 100 miles which is 1609 meters * 100), and see when that condition is <code>TRUE</code>.</p>
+
+<p>We should see a map that looks like this:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537286793791_Screen+Shot+2018-09-18+at+12.06.12+PM.png" alt=""></p>
+
+<p><a href="https://postgis.net/docs/ST_DWithin.html">More on</a> <code>[ST_DWithin](https://postgis.net/docs/ST_DWithin.html)</code></p>
+
+<h2 id="toc_56">ST_Length</h2>
+
+<p>If you want to find the length of a line, you can use <code>ST_Line</code> to find that length (we will use <a href="https://team.carto.com/u/mforrest/dataset/us_railroads">this table to measure the lines</a>):</p>
+
+<div><pre><code class="language-none">SELECT ST_Length(the_geom_webmercator) / 1609 as length 
+FROM mforrest.us_railroads LIMIT 5</code></pre></div>
+
+<p>Which will return these results:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537289726054_Screen+Shot+2018-09-18+at+12.55.06+PM.png" alt=""></p>
+
+<p><a href="https://postgis.net/docs/ST_Length.html">More on</a> <code>[ST_Length](https://postgis.net/docs/ST_Length.html)</code></p>
+
+<h2 id="toc_57">ST_Area</h2>
+
+<p>What if you want to find the area of a polygon? You can use <code>ST_Area</code>:</p>
+
+<div><pre><code class="language-none">SELECT 
+state,
+ST_Area(the_geom_webmercator) / 1609 as area
+FROM us_states 
+ORDER BY area DESC</code></pre></div>
+
+<p>That query will return a table with the areas of each polygon:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537289953754_Screen+Shot+2018-09-18+at+12.58.53+PM.png" alt=""></p>
+
+<p><a href="https://postgis.net/docs/ST_Area.html">More on</a> <code>[ST_Area](https://postgis.net/docs/ST_Area.html)</code></p>
+
+<h2 id="toc_58">ST<em>Overlaps, ST</em>Contains, ST_Crosses</h2>
+
+<p>What if you want to see if two features overlap? <code>ST_Overlaps</code> can help us out. The exact definition of <code>ST_Overlaps</code> is:</p>
+
+<blockquote>
+<p>Returns TRUE if the Geometries &quot;spatially overlap&quot;. By that we mean they intersect, but one does not completely contain another</p>
+</blockquote>
+
+<p>So we can use a where clause to see which areas overlap, but aren’t completely contained by another area such as a bounding box:</p>
+
+<div><pre><code class="language-none">WITH a AS (SELECT ST_MakeEnvelope(-106.48,38.42,-89.55,45.23, 4326) as the_geom)
+
+SELECT
+us_states.cartodb_id,
+us_states.the_geom,
+us_states.the_geom_webmercator,
+ST_Overlaps(a.the_geom, us_states.the_geom)
+FROM a, us_states
+WHERE ST_Overlaps(a.the_geom, us_states.the_geom) IS true</code></pre></div>
+
+<p>This will return a map that looks like this:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537290721678_Screen+Shot+2018-09-18+at+1.11.47+PM.png" alt=""></p>
+
+<p>Since Iowa and Nebraska are completely contained by the bounding box, they do not show up in the map.</p>
+
+<p>The opposite is <code>ST_Contains</code> which returns values that totally contain the other values:</p>
+
+<div><pre><code class="language-none">WITH a AS (SELECT ST_MakeEnvelope(-106.48,38.42,-89.55,45.23, 4326) as the_geom)
+
+SELECT
+us_states.cartodb_id,
+us_states.the_geom,
+us_states.the_geom_webmercator,
+ST_Contains(a.the_geom, us_states.the_geom)
+FROM a, us_states
+WHERE ST_Contains(a.the_geom, us_states.the_geom) IS true</code></pre></div>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537290860820_Screen+Shot+2018-09-18+at+1.13.30+PM.png" alt=""></p>
+
+<p><code>ST_Crosses</code> is another similar operation, but looks for items that cross the border of another geometry:</p>
+
+<div><pre><code class="language-none">WITH a AS (SELECT ST_MakeEnvelope(-106.48,38.42,-89.55,45.23, 4326) as the_geom)
+
+SELECT
+us_states.cartodb_id,
+us_states.the_geom,
+us_states.the_geom_webmercator,
+ST_Contains(a.the_geom, us_states.the_geom)
+FROM a, us_states
+WHERE ST_Contains(a.the_geom, us_states.the_geom) IS true</code></pre></div>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537291027116_Screen+Shot+2018-09-18+at+1.16.18+PM.png" alt=""></p>
+
+<p><a href="https://postgis.net/docs/ST_Overlaps.html">More on</a> <code>[ST_Overlaps](https://postgis.net/docs/ST_Overlaps.html)</code>
+<a href="https://postgis.net/docs/ST_Overlaps.html"></a><a href="https://postgis.net/docs/ST_Contains.html">More on</a> <code>[ST_Contains](https://postgis.net/docs/ST_Contains.html)</code>
+<a href="https://postgis.net/docs/ST_Contains.html"></a><a href="https://postgis.net/docs/ST_Crosses.html">More on</a> <code>[ST_Crosses](https://postgis.net/docs/ST_Crosses.html)</code></p>
+
+<h2 id="toc_59">ST_Buffer</h2>
+
+<p>If you want to create a buffer around a geometry (such as a point, line or polygon) you can use <code>ST_Buffer</code>:</p>
+
+<div><pre><code class="language-none">SELECT 
+cartodb_id,
+ST_Buffer(the_geom, 250 * 1609) as the_geom,
+ST_Buffer(the_geom_webmercator, 250 * 1609) as the_geom_webmercator
+FROM accidents
+LIMIT 1</code></pre></div>
+
+<p>This will create a 250 mile buffer around a single point:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537292815309_Screen+Shot+2018-09-18+at+1.44.32+PM.png" alt=""></p>
+
+<p><a href="https://postgis.net/docs/ST_Buffer.html">More on</a> <code>[ST_Buffer](https://postgis.net/docs/ST_Buffer.html)</code></p>
+
+<h2 id="toc_60">ST_Perimeter</h2>
+
+<p>To find the perimiter of a feature, use <code>ST_Perimeter</code>:</p>
+
+<div><pre><code class="language-none">SELECT 
+state,
+ST_Perimeter(the_geom_webmercator) / 1609 as perimiter
+FROM us_states
+WHERE state = &#39;Iowa’</code></pre></div>
+
+<p>Which will return this result:</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537294011539_Screen+Shot+2018-09-18+at+2.06.37+PM.png" alt=""></p>
+
+<h2 id="toc_61">Combining Queries</h2>
+
+<p>You can also use multiple functions in one. Let’s take a look at this:</p>
+
+<div><pre><code class="language-none">SELECT 
+row_number() over() as cartodb_id,
+ST_Union(ST_Buffer(the_geom, 50 * 1609)) as the_geom,
+ST_Union(ST_Buffer(the_geom_webmercator, 50 * 1609)) as the_geom_webmercator
+FROM accidents
+WHERE railroad = &#39;UP&#39;</code></pre></div>
+
+<p>This will create a 50 mile, unioned buffer around all the accidents caused by <code>UP</code>.</p>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537293089830_Screen+Shot+2018-09-18+at+1.50.37+PM.png" alt=""></p>
+
+<p>You can use subqueries as well:</p>
+
+<div><pre><code class="language-none">WITH a AS (SELECT 
+row_number() over() as cartodb_id,
+ST_Union(ST_Buffer(the_geom, 50 * 1609)) as the_geom,
+ST_Union(ST_Buffer(the_geom_webmercator, 50 * 1609)) as the_geom_webmercator
+FROM accidents
+WHERE railroad = &#39;UP&#39;)
+
+SELECT 
+accidents.*
+FROM accidents, a
+WHERE ST_Intersects(a.the_geom_webmercator, accidents.the_geom_webmercator)</code></pre></div>
+
+<p><img src="https://d2mxuefqeaa7sj.cloudfront.net/s_4E425262DBB316D138719FFCD67F354E68CB9AC775AC7F94CCABF11EEF63D643_1537293819985_Screen+Shot+2018-09-18+at+2.03.16+PM.png" alt=""></p>
+
+<h1 id="toc_62">Practical PostGIS</h1>
+
+<p>unions of longer data like USAC
+use this slide - https://docs.google.com/presentation/d/1KB3rp33xSGDDpcyWJyjz-j23<em>bkQE4aisl7DoffV--Y/edit#slide=id.g2d4058dbfe</em>1_190
+counts and geom grouping</p>
+
+<p>Do this in the context of site selection problems</p>
+
+<h1 id="toc_63">CARTO Operations</h1>
+
+<ul>
+<li>Geocoding</li>
+<li>Routing</li>
+<li>Isolines</li>
+<li>Crankshaft</li>
+<li>Grid &amp; Hexbin</li>
+</ul>
+
+
+
+
+</body>
+
+</html>
