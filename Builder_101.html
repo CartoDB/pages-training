@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Builder 101- Making an Interactive Hurricane Map</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb
+}
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0">Builder 101: Making an Interactive Hurricane Map</h1>
+
+<p>This is a lesson in how to make an interactive hurricane map in CARTO</p>
+
+<p>Final product of this lesson will look like <a href="https://team.carto.com/u/jferzoco/builder/75f6e0d2-7765-4bec-b03e-2a83b8695b03/embed">this</a> </p>
+
+<h2 id="toc_1">Map Setup</h2>
+
+<ol>
+<li>Log into CARTO</li>
+<li>Open up Maps Dashboard</li>
+</ol>
+
+<p><img src="login.png" alt=""></p>
+
+<ol>
+<li>Create a ‘New map’</li>
+</ol>
+
+<p><img src="newmap.png" alt=""></p>
+
+<ol>
+<li>Select ‘Create Empty Map’ </li>
+</ol>
+
+<p>You will see a basic map with no data on it and a layer card with a warning symbol, telling you there is no geometry (no shapes, points or lines on the map)</p>
+
+<ol>
+<li> Double click on the title of the map to make it active</li>
+<li> Name the map ‘Interactive Hurricane Map’</li>
+</ol>
+
+<p><img src="name.png" alt=""></p>
+
+<ol>
+<li>Change Basemap to put labels below</li>
+</ol>
+
+<p>Open up the basemaps sidebar by clicking the current basemap
+Select ‘Positron (labels below)’ as the new basemap. </p>
+
+<p><img src="basemaps.png" alt=""></p>
+
+<h2 id="toc_2">Add Hurricane Zones</h2>
+
+<ol>
+<li>Download Hurricane Zones (<a href="https://team.carto.com/u/hollyorr/tables/jferzoco.hurricane_zones/public/map?redirected=true">link</a>)</li>
+<li>Hit ‘Download’ button on interface<br></li>
+</ol>
+
+<p><img src="download.png" alt=""></p>
+
+<ol>
+<li>Choose SHP as format</li>
+<li>In your map, click ‘Add’ button on top of layer sidebar</li>
+</ol>
+
+<p><img src="layers_add.png" alt=""></p>
+
+<ol>
+<li>Go to the ‘Connect Dataset’ tab</li>
+<li>Drag and Drop file to the upload field. </li>
+<li>Click ‘Add Layer’</li>
+<li>Double click layer name and rename to ‘Hurricane Zones’</li>
+<li>Click 3-dot icon and ‘Center map on layer’</li>
+</ol>
+
+<h3 id="toc_3">Style Hurricane Zones</h3>
+
+<ol>
+<li>Click on layer to go into layer settings </li>
+<li>Select the Style tab (may already be selected)</li>
+<li>Click on the ‘Fill’ bar and select the right-hand ‘By Value’ setting, then select the value (column) <code>hurricane_</code></li>
+</ol>
+
+<p><img src="value.png" alt=""></p>
+
+<p>Once you select that, it will assign colors to your hurricane zones. </p>
+
+<h3 id="toc_4">Use actual NYC Hurricane Zone colors</h3>
+
+<ol>
+<li>In the bottom of the style panel, flip this switch to edit the CartoCSS in the backend</li>
+</ol>
+
+<p><img src="css.png" alt=""></p>
+
+<ol>
+<li>There you will see the underlying code to edit the current colors to the hurricane colors</li>
+<li><p>Replace the code there with this:</p>
+
+<div><pre><code class="language-none"> #layer {polygon-fill: ramp([hurricane_], (#bababa, #dc7e5e, #e39d5d, #e9e066, #bed066, #98c576, #52A696), (&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;), &quot;=&quot;);
+  polygon-opacity:1;
+  line-width: 0;
+  line-color: #FFF;
+  line-opacity: 1;
+}</code></pre></div></li>
+</ol>
+
+<h2 id="toc_5">Add Evacuation Centers</h2>
+
+<ol>
+<li>Evacuation Centers (<a href="https://team.carto.com/u/hollyorr/tables/jferzoco.oem_hurricaneevacuationcenters_01june2013/public/map?redirected=true">link</a>)</li>
+<li>Hit ‘Download’ button on interface<br></li>
+<li>Choose CSV as format</li>
+<li>Click ‘Add’ button on top of layer sidebar</li>
+<li>Go to the ‘Connect Dataset’ tab</li>
+<li>Drag and Drop file to the upload field. </li>
+<li>Click ‘Add Layer’</li>
+<li>Double click layer name and rename ‘Evacuation Centers’</li>
+</ol>
+
+<h3 id="toc_6">Style Evacuation Centers</h3>
+
+<ol>
+<li>Select <code>POINT SIZE</code>  and change it to ‘19.5’</li>
+<li>Select the color bar next to the number and make it red</li>
+<li>Select <code>STROKE SIZE</code> and change it to ‘5’</li>
+</ol>
+
+<h2 id="toc_7">Analysis</h2>
+
+<h3 id="toc_8">Generate a 20-minute walk from each evacuation center</h3>
+
+<ol>
+<li>Click on ‘Evacuation Centers’ layer name or layer letter</li>
+<li>Go to ‘Analysis’ tab</li>
+</ol>
+
+<p><img src="analysis.png" alt=""></p>
+
+<ol>
+<li>Select <code>Add Analysis</code></li>
+<li>Select analysis <code>Create Travel/Distance Buffers</code></li>
+<li>Click <code>Add Analysis</code></li>
+<li>Enter the following parameters</li>
+</ol>
+
+<p><strong>Show option 1 (credits used)</strong> </p>
+
+<ul>
+<li>Type: Time</li>
+<li>By: walk</li>
+<li>Time (Seconds): 1800 </li>
+<li>Tracts: 1 </li>
+<li>Boundaries: intact</li>
+</ul>
+
+<p><img src="time_travel.png" alt=""></p>
+
+<p><strong>Option 2 (credits not used)</strong></p>
+
+<ul>
+<li>Type: Distance</li>
+<li>Units: mi </li>
+<li>Radius: .5 </li>
+<li>Tracts: 1 </li>
+<li>Boundaries: intact</li>
+</ul>
+
+<p><img src="distance.png" alt=""></p>
+
+<p>Press return. Analysis will run, generating a 20-minute walk (Option 1) or a 5 mile circle around each center (Option 2). </p>
+
+<h3 id="toc_9">Separate evac centers from polygon</h3>
+
+<ol>
+<li>Return to Top level of map</li>
+<li>Find the ‘Evacuation Centers’ Layer</li>
+<li>Click and hold the <code>A1</code> module in the layer card</li>
+<li>Drag analysis results <code>C1</code> into its own layer</li>
+<li>Double click new layer name and rename ‘Evacuation Range’</li>
+</ol>
+
+<p><img src="analysis_layers.png" alt=""></p>
+
+<h3 id="toc_10">Style Evacuation Range layer</h3>
+
+<ol>
+<li>Select <code>Fill</code>  and set the opacity to .07 towards the bottom, either by changing the number or using the slider. </li>
+<li>Set the stroke to <code>1</code></li>
+</ol>
+
+<h2 id="toc_11">Add Greenpoint Buildings</h2>
+
+<ol>
+<li>Buildings in Greenpoint (<a href="https://team.carto.com/u/hollyorr/tables/jferzoco.greenpoint_buildings/public/map?redirected=true">link</a>)<br></li>
+<li>Hit <code>Download</code> button on interface<br></li>
+<li>Choose <code>.gpkg</code> as format</li>
+<li>Click ‘Add’ button on top of layer sidebar</li>
+<li>Go to the <code>Connect Dataset</code> tab</li>
+<li>Drag and Drop file to the upload field. </li>
+<li>Click <code>Add Layer</code></li>
+</ol>
+
+<h3 id="toc_12">Style buildings by zone</h3>
+
+<ol>
+<li>In the bottom of the style panel, flip this switch to edit the CartoCSS in the backend:</li>
+</ol>
+
+<p>There you will see the underlying code to edit the current colors to the hurricane colors</p>
+
+<ol>
+<li><p>Replace the code there with this:</p>
+
+<div><pre><code class="language-none">#layer {polygon-fill: ramp([zone], (#bababa, #dc7e5e, #e39d5d, #e9e066, #bed066, #98c576, #52A696), (&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;), &quot;=&quot;);
+  polygon-opacity:1;
+  line-width: 0;
+  line-color: #FFF;
+  line-opacity: 1;
+}</code></pre></div></li>
+</ol>
+
+<h3 id="toc_13">Lower opacity of the hurricane zones</h3>
+
+<ol>
+<li>Go to layer : Hurricane zones</li>
+<li>Style &gt; Cartocss &gt; edit line: polygon-opacity:.4;</li>
+</ol>
+
+<h2 id="toc_14">Add popup to Buildings</h2>
+
+<ol>
+<li>Go to layer : Greenpoint Buildings</li>
+<li>Tab&gt; Pop-up &gt; Activate a popup (any color)</li>
+<li>Turn on: bin<em>id, height roof, num</em>floors, year_built</li>
+</ol>
+
+<h2 id="toc_15">Make link to BIN site open in DOB website:</h2>
+
+<ol>
+<li>Go to layer: Greenpoint Buildings</li>
+<li>Popup &gt; HTML</li>
+<li><p>Find where {{bin_id}} is located, replace that H4 block (line 9, probably) with this code: </p>
+
+<div><pre><code class="language-none">&lt;h4 class=&quot;CDB-infowindow-title&quot;&gt;&lt;a href=&quot;http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin={{bin_id}}&quot; target=blank_&lt;/a&gt;{{bin_id}}&lt;/h4&gt;</code></pre></div></li>
+<li><p>Click on a building and activate BIN link</p></li>
+</ol>
+
+<h2 id="toc_16">Add widgets</h2>
+
+<ol>
+<li>On top level, switch to the Widgets panel</li>
+<li>Select ‘Add Widget’</li>
+</ol>
+
+<p>You’ll see four tabs, ‘Category’, ‘Histogram’, ‘Formula’ and ‘time series’ 
+Check the following boxes: </p>
+
+<ul>
+<li>Histogram &gt; heightroof, num_floors</li>
+<li>Formula &gt; ‘point count’ or ‘polygon count’</li>
+<li>Timeseries &gt; year<em>built</em>date</li>
+</ul>
+
+<h3 id="toc_17">Style Widgets</h3>
+
+<p>On all: </p>
+
+<ul>
+<li>Fill color: #ff0000</li>
+<li>Rename all widgets</li>
+<li>Create a custom color ramp:
+
+<ul>
+<li>On a histogram, select <code>Custom color</code> at bottom</li>
+<li>Assign a range of colors to be activated in autostyling</li>
+</ul></li>
+</ul>
+
+<h2 id="toc_18">Join zones to buildings</h2>
+
+<ol>
+<li>Click into layer, and click table name hyperlink below file name.</li>
+<li>Add a column to the greenpoint_buildings file named ‘zone’</li>
+<li>Add column</li>
+<li>name ‘zone_id’<br></li>
+<li><p>Open SQL pane at bottom</p>
+
+<p>Update greenpoint<em>buildings SET zone</em>id = hurricane_ from hurricane<em>zones WHERE ST</em>Intersects(hurricane<em>zones.the</em>geom, greenpoint<em>buildings.the</em>geom)</p></li>
+</ol>
+
+<p>This is the base code for that: </p>
+
+<div><pre><code class="language-none">Update {table} SET {new_column} = {source_column) from {source_table} WHERE ST_Intersects(source_table.the_geom, main_table.the_geom)</code></pre></div>
+
+
+
+
+</body>
+
+</html>
