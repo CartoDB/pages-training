@@ -517,99 +517,125 @@ Go to <code>Analysis</code> tab</p>
 <li>Go to the <code>Connect Dataset</code> tab</li>
 <li>Drag and Drop file to the upload field. </li>
 <li>Click <code>Add Layer</code></li>
+<li>Double click new layer name and rename <code>Greenpoint Buildings</code></li>
 </ul>
 
 <h3 id="toc_12">Style buildings by zone</h3>
 
 <ul>
 <li>In the bottom of the style panel, flip this switch to edit the CartoCSS in the backend:</li>
-</ul>
-
-<p>There you will see the underlying code to edit the current colors to the hurricane colors</p>
-
-<ul>
 <li><p>Replace the code there with this:</p>
 
-<div><pre><code class="language-none">#layer {polygon-fill: ramp([zone], (#bababa, #dc7e5e, #e39d5d, #e9e066, #bed066, #98c576, #52A696), (&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;), &quot;=&quot;);
-  polygon-opacity:1;
-  line-width: 0;
-  line-color: #FFF;
-  line-opacity: 1;
+<div><pre><code class="language-none">#layer {
+polygon-fill: ramp([zone], (#bababa, #dc7e5e, #e39d5d, #e9e066, #bed066, #98c576, #52A696), (&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;), &quot;=&quot;);
+}
+#layer::outline {
+  line-width: 1;
+  line-color: #FFFFFF;
+  line-opacity: 0.5;
 }</code></pre></div></li>
 </ul>
 
-<h3 id="toc_13">Lower opacity of the hurricane zones</h3>
+<h3 id="toc_13">Decrease opacity of the hurricane zones</h3>
 
 <ul>
-<li>Go to layer : Hurricane zones</li>
-<li>Style &gt; Cartocss &gt; edit line: polygon-opacity:.4;</li>
+<li>Go to layer: Hurricane zones</li>
+<li>Style &gt; Cartocss &gt; edit line: <code>polygon-opacity: 0.4</code>;</li>
 </ul>
 
-<h2 id="toc_14">Add popup to Buildings</h2>
-
-<ul>
-<li>Go to layer : Greenpoint Buildings</li>
-<li>Tab &gt; Pop-up &gt; Activate a popup (any color)</li>
-<li>Turn on: bin<em>id, height roof, num</em>floors, year_built</li>
-</ul>
-
-<h2 id="toc_15">Make link to BIN site open in DOB website:</h2>
+<h3 id="toc_14">Add popup to Buildings</h3>
 
 <ul>
 <li>Go to layer: Greenpoint Buildings</li>
-<li>Popup &gt; HTML</li>
-<li><p>Find where {{bin_id}} is located, replace that H4 block (line 9, probably) with this code: </p>
-
-<div><pre><code class="language-none">&lt;h4 class=&quot;CDB-infowindow-title&quot;&gt;&lt;a href=&quot;http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin={{bin_id}}&quot; target=blank_&lt;/a&gt;{{bin_id}}&lt;/h4&gt;</code></pre></div></li>
-<li><p>Click on a building and activate BIN link</p></li>
+<li>Tab &gt; Pop-up &gt; Activate a popup (any color)</li>
 </ul>
 
-<h2 id="toc_16">Add widgets</h2>
+<p><img src="img/popup.png" alt=""></p>
+
+<ul>
+<li>Turn on and change name: 
+
+<ul>
+<li>bin_id &gt;&gt; BIN ID</li>
+<li>heightroof &gt;&gt; Height</li>
+<li>num_floors &gt;&gt; Number of Floors</li>
+<li>year_built &gt;&gt; Year Built</li>
+</ul></li>
+</ul>
+
+<h2 id="toc_15">Add widgets</h2>
 
 <ul>
 <li>On top level, switch to the Widgets panel</li>
+</ul>
+
+<p><img src="img/widgets.png" alt=""></p>
+
+<ul>
 <li>Select <code>Add Widget</code></li>
 </ul>
 
-<p>You&#39;ll see four tabs, <code>Category</code>, <code>Histogram</code>, <code>Formula</code> and <code>time series</code> 
-Check the following boxes: </p>
+<p>You&#39;ll see four tabs, <code>Category</code>, <code>Histogram</code>, <code>Formula</code> and <code>time series</code> </p>
+
+<p>Check the following boxes: </p>
 
 <ul>
-<li>Histogram &gt; heightroof, num_floors</li>
-<li>Formula &gt; <code>point count</code> or <code>polygon count</code></li>
-<li>Timeseries &gt; year<em>built</em>date</li>
+<li>Histogram &gt; <code>heightroof</code>, <code>num_floors</code></li>
+<li>Formula &gt; <code>feature count</code></li>
+</ul>
+
+<p><img src="img/widgets_add.png" alt=""></p>
+
+<ul>
+<li>Timeseries &gt; <code>year_built_date</code></li>
+</ul>
+
+<h3 id="toc_16">Clean data</h3>
+
+<p>Fix time series problem:</p>
+
+<ul>
+<li><p>Go to SQL pane and run the following query:</p>
+
+<div><pre><code class="language-none">SELECT * FROM hollyorr.greenpoint_buildings WHERE year_built_date = &#39;0001-01-01T00:00:00.000Z&#39;</code></pre></div></li>
+<li><p>Then:</p>
+
+<div><pre><code class="language-none">SELECT * FROM hollyorr.greenpoint_buildings WHERE year_built_date &lt;&gt; &#39;0001-01-01T00:00:00.000Z&#39;</code></pre></div></li>
+<li><p>Export and re-import the new dataset</p></li>
+<li><p>Create time series from new dataset</p></li>
 </ul>
 
 <h3 id="toc_17">Style Widgets</h3>
 
-<p>On all: </p>
+<ul>
+<li>Edit the widget:</li>
+</ul>
+
+<p><img src="img/widget_edit.png" alt=""></p>
+
+<p>Change the following for each widget:</p>
 
 <ul>
 <li>Fill color: #ff0000</li>
-<li>Rename all widgets</li>
-<li>Create a custom color ramp:
-
-<ul>
-<li>On a histogram, select <code>Custom color</code> at bottom</li>
-<li>Assign a range of colors to be activated in autostyling</li>
-</ul></li>
+<li>Rename the widget</li>
+<li>Try changing dynamic from <code>yes</code> to <code>no</code></li>
 </ul>
 
-<h2 id="toc_18">Join zones to buildings</h2>
+<p><img src="img/dynamic.png" alt=""></p>
+
+<h2 id="toc_18">Extra: PostGIS Command Example</h2>
 
 <ul>
 <li>Click into layer, and click table name hyperlink below file name.</li>
-<li>Add a column to the greenpoint_buildings file named <code>zone</code></li>
-<li>Add column</li>
-<li>Name <code>zone_id</code><br></li>
-<li><p>Open SQL pane at bottom</p>
+<li>Add a column to the greenpoint_buildings file named <code>zone_id</code> </li>
+<li>Open SQL pane at bottom</li>
+<li><p>Use <a href="http://postgis.org/docs/ST_Intersects.html">ST_Intersects</a>:</p>
+
+<div><pre><code class="language-none">Update {table} SET {new_column} = {source_column) from {source_table} WHERE ST_Intersects(source_table.the_geom, main_table.the_geom)</code></pre></div></li>
+<li><p>Like this:</p>
 
 <div><pre><code class="language-none">Update greenpoint_buildings SET zone_id = hurricane_ from hurricane_zones WHERE ST_Intersects(hurricane_zones.the_geom, greenpoint_buildings.the_geom)</code></pre></div></li>
 </ul>
-
-<p>This is the base code for that: </p>
-
-<div><pre><code class="language-none">Update {table} SET {new_column} = {source_column) from {source_table} WHERE ST_Intersects(source_table.the_geom, main_table.the_geom)</code></pre></div>
 
 
 
