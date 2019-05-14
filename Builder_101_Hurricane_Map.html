@@ -5,7 +5,7 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Builder 101- Making an Interactive Hurricane Map</title>
+<title>Builder_101_Hurricane_Map</title>
 
 
 <style type="text/css">
@@ -336,86 +336,84 @@ kbd {
 
 <h2 id="toc_1">Map Setup</h2>
 
-<ol>
+<ul>
 <li>Log into CARTO</li>
 <li>Open up Maps Dashboard</li>
-</ol>
+</ul>
 
-<p><img src="login.png" alt=""></p>
+<p><img src="img/login.png" alt=""></p>
 
-<ol>
-<li>Create a ‘New map’</li>
-</ol>
+<p>Create a <code>New map</code></p>
 
-<p><img src="newmap.png" alt=""></p>
+<p><img src="img/newmap.png" alt=""></p>
 
-<ol>
-<li>Select ‘Create Empty Map’ </li>
-</ol>
+<ul>
+<li>Select <code>Create Empty Map</code> </li>
+</ul>
 
 <p>You will see a basic map with no data on it and a layer card with a warning symbol, telling you there is no geometry (no shapes, points or lines on the map)</p>
 
-<ol>
-<li> Double click on the title of the map to make it active</li>
-<li> Name the map ‘Interactive Hurricane Map’</li>
-</ol>
+<ul>
+<li>Double click on the title of the map to make it active</li>
+<li>Name the map <code>Interactive Hurricane Map</code></li>
+</ul>
 
-<p><img src="name.png" alt=""></p>
+<p><img src="img/name.png" alt=""></p>
 
-<ol>
+<ul>
 <li>Change Basemap to put labels below</li>
-</ol>
+</ul>
 
 <p>Open up the basemaps sidebar by clicking the current basemap
-Select ‘Positron (labels below)’ as the new basemap. </p>
+Select <code>Positron (labels below)</code> as the new basemap. </p>
 
-<p><img src="basemaps.png" alt=""></p>
+<p><img src="img/basemaps.png" alt=""></p>
 
 <h2 id="toc_2">Add Hurricane Zones</h2>
 
-<ol>
+<ul>
 <li>Download Hurricane Zones (<a href="https://team.carto.com/u/hollyorr/tables/jferzoco.hurricane_zones/public/map?redirected=true">link</a>)</li>
-<li>Hit ‘Download’ button on interface<br></li>
-</ol>
+<li>Hit <code>Download</code> button on interface<br></li>
+</ul>
 
-<p><img src="download.png" alt=""></p>
+<p><img src="img/download.png" alt=""></p>
 
-<ol>
+<ul>
 <li>Choose SHP as format</li>
-<li>In your map, click ‘Add’ button on top of layer sidebar</li>
-</ol>
+<li>In your map, click <code>Add</code> button on top of layer sidebar</li>
+</ul>
 
-<p><img src="layers_add.png" alt=""></p>
+<p><img src="img/layers_add.png" alt=""></p>
 
-<ol>
-<li>Go to the ‘Connect Dataset’ tab</li>
+<ul>
+<li>Go to the <code>Connect Dataset</code> tab</li>
 <li>Drag and Drop file to the upload field. </li>
-<li>Click ‘Add Layer’</li>
-<li>Double click layer name and rename to ‘Hurricane Zones’</li>
-<li>Click 3-dot icon and ‘Center map on layer’</li>
-</ol>
+<li>Click <code>Add Layer</code></li>
+<li>Double click layer name and rename to <code>Hurricane Zones</code></li>
+<li>Click 3-dot icon and <code>Center map on layer</code></li>
+</ul>
 
 <h3 id="toc_3">Style Hurricane Zones</h3>
 
-<ol>
+<ul>
 <li>Click on layer to go into layer settings </li>
 <li>Select the Style tab (may already be selected)</li>
-<li>Click on the ‘Fill’ bar and select the right-hand ‘By Value’ setting, then select the value (column) <code>hurricane_</code></li>
-</ol>
+<li>Click on the <code>Fill</code> bar and select the right-hand <code>By Value</code> setting, then select the value (column) <code>hurricane_</code></li>
+</ul>
 
-<p><img src="value.png" alt=""></p>
+<p><img src="img/value.png" alt=""></p>
 
 <p>Once you select that, it will assign colors to your hurricane zones. </p>
 
 <h3 id="toc_4">Use actual NYC Hurricane Zone colors</h3>
 
-<ol>
+<ul>
 <li>In the bottom of the style panel, flip this switch to edit the CartoCSS in the backend</li>
-</ol>
+</ul>
 
-<p><img src="css.png" alt=""></p>
+<p><img src="img/css.png" alt=""></p>
 
-<ol>
+<ul>
 <li>There you will see the underlying code to edit the current colors to the hurricane colors</li>
 <li><p>Replace the code there with this:</p>
 
@@ -425,46 +423,44 @@ Select ‘Positron (labels below)’ as the new basemap. </p>
   line-color: #FFF;
   line-opacity: 1;
 }</code></pre></div></li>
-</ol>
+</ul>
 
 <h2 id="toc_5">Add Evacuation Centers</h2>
 
-<ol>
+<ul>
 <li>Evacuation Centers (<a href="https://team.carto.com/u/hollyorr/tables/jferzoco.oem_hurricaneevacuationcenters_01june2013/public/map?redirected=true">link</a>)</li>
-<li>Hit ‘Download’ button on interface<br></li>
+<li>Hit <code>Download</code> button on interface<br></li>
 <li>Choose CSV as format</li>
-<li>Click ‘Add’ button on top of layer sidebar</li>
-<li>Go to the ‘Connect Dataset’ tab</li>
+<li>Click <code>Add</code> button on top of layer sidebar</li>
+<li>Go to the <code>Connect Dataset</code> tab</li>
 <li>Drag and Drop file to the upload field. </li>
-<li>Click ‘Add Layer’</li>
-<li>Double click layer name and rename ‘Evacuation Centers’</li>
-</ol>
+<li>Click <code>Add Layer</code></li>
+<li>Double click layer name and rename <code>Evacuation Centers</code></li>
+</ul>
 
 <h3 id="toc_6">Style Evacuation Centers</h3>
 
-<ol>
-<li>Select <code>POINT SIZE</code>  and change it to ‘19.5’</li>
+<ul>
+<li>Select <code>POINT SIZE</code>  and change it to <code>19.5</code></li>
 <li>Select the color bar next to the number and make it red</li>
-<li>Select <code>STROKE SIZE</code> and change it to ‘5’</li>
-</ol>
+<li>Select <code>STROKE SIZE</code> and change it to <code>5</code></li>
+</ul>
 
 <h2 id="toc_7">Analysis</h2>
 
 <h3 id="toc_8">Generate a 20-minute walk from each evacuation center</h3>
 
-<ol>
-<li>Click on ‘Evacuation Centers’ layer name or layer letter</li>
-<li>Go to ‘Analysis’ tab</li>
-</ol>
+<p>Click on <code>Evacuation Centers</code> layer name or layer letter
+Go to <code>Analysis</code> tab</p>
 
-<p><img src="analysis.png" alt=""></p>
+<p><img src="img/analysis.png" alt=""></p>
 
-<ol>
+<ul>
 <li>Select <code>Add Analysis</code></li>
 <li>Select analysis <code>Create Travel/Distance Buffers</code></li>
 <li>Click <code>Add Analysis</code></li>
 <li>Enter the following parameters</li>
-</ol>
+</ul>
 
 <p><strong>Show option 1 (credits used)</strong> </p>
 
@@ -476,7 +472,7 @@ Select ‘Positron (labels below)’ as the new basemap. </p>
 <li>Boundaries: intact</li>
 </ul>
 
-<p><img src="time_travel.png" alt=""></p>
+<p><img src="img/time_travel.png" alt=""></p>
 
 <p><strong>Option 2 (credits not used)</strong></p>
 
@@ -488,50 +484,50 @@ Select ‘Positron (labels below)’ as the new basemap. </p>
 <li>Boundaries: intact</li>
 </ul>
 
-<p><img src="distance.png" alt=""></p>
+<p><img src="img/distance.png" alt=""></p>
 
 <p>Press return. Analysis will run, generating a 20-minute walk (Option 1) or a 5 mile circle around each center (Option 2). </p>
 
 <h3 id="toc_9">Separate evac centers from polygon</h3>
 
-<ol>
+<ul>
 <li>Return to Top level of map</li>
-<li>Find the ‘Evacuation Centers’ Layer</li>
+<li>Find the <code>Evacuation Centers</code> Layer</li>
 <li>Click and hold the <code>A1</code> module in the layer card</li>
 <li>Drag analysis results <code>C1</code> into its own layer</li>
-<li>Double click new layer name and rename ‘Evacuation Range’</li>
-</ol>
+<li>Double click new layer name and rename <code>Evacuation Range</code></li>
+</ul>
 
-<p><img src="analysis_layers.png" alt=""></p>
+<p><img src="img/analysis_layers.png" alt=""></p>
 
 <h3 id="toc_10">Style Evacuation Range layer</h3>
 
-<ol>
+<ul>
 <li>Select <code>Fill</code>  and set the opacity to .07 towards the bottom, either by changing the number or using the slider. </li>
 <li>Set the stroke to <code>1</code></li>
-</ol>
+</ul>
 
 <h2 id="toc_11">Add Greenpoint Buildings</h2>
 
-<ol>
+<ul>
 <li>Buildings in Greenpoint (<a href="https://team.carto.com/u/hollyorr/tables/jferzoco.greenpoint_buildings/public/map?redirected=true">link</a>)<br></li>
 <li>Hit <code>Download</code> button on interface<br></li>
 <li>Choose <code>.gpkg</code> as format</li>
-<li>Click ‘Add’ button on top of layer sidebar</li>
+<li>Click <code>Add</code> button on top of layer sidebar</li>
 <li>Go to the <code>Connect Dataset</code> tab</li>
 <li>Drag and Drop file to the upload field. </li>
 <li>Click <code>Add Layer</code></li>
-</ol>
+</ul>
 
 <h3 id="toc_12">Style buildings by zone</h3>
 
-<ol>
+<ul>
 <li>In the bottom of the style panel, flip this switch to edit the CartoCSS in the backend:</li>
-</ol>
+</ul>
 
 <p>There you will see the underlying code to edit the current colors to the hurricane colors</p>
 
-<ol>
+<ul>
 <li><p>Replace the code there with this:</p>
 
 <div><pre><code class="language-none">#layer {polygon-fill: ramp([zone], (#bababa, #dc7e5e, #e39d5d, #e9e066, #bed066, #98c576, #52A696), (&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;), &quot;=&quot;);
@@ -540,47 +536,47 @@ Select ‘Positron (labels below)’ as the new basemap. </p>
   line-color: #FFF;
   line-opacity: 1;
 }</code></pre></div></li>
-</ol>
+</ul>
 
 <h3 id="toc_13">Lower opacity of the hurricane zones</h3>
 
-<ol>
+<ul>
 <li>Go to layer : Hurricane zones</li>
 <li>Style &gt; Cartocss &gt; edit line: polygon-opacity:.4;</li>
-</ol>
+</ul>
 
 <h2 id="toc_14">Add popup to Buildings</h2>
 
-<ol>
+<ul>
 <li>Go to layer : Greenpoint Buildings</li>
-<li>Tab&gt; Pop-up &gt; Activate a popup (any color)</li>
+<li>Tab &gt; Pop-up &gt; Activate a popup (any color)</li>
 <li>Turn on: bin<em>id, height roof, num</em>floors, year_built</li>
-</ol>
+</ul>
 
 <h2 id="toc_15">Make link to BIN site open in DOB website:</h2>
 
-<ol>
+<ul>
 <li>Go to layer: Greenpoint Buildings</li>
 <li>Popup &gt; HTML</li>
 <li><p>Find where {{bin_id}} is located, replace that H4 block (line 9, probably) with this code: </p>
 
 <div><pre><code class="language-none">&lt;h4 class=&quot;CDB-infowindow-title&quot;&gt;&lt;a href=&quot;http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin={{bin_id}}&quot; target=blank_&lt;/a&gt;{{bin_id}}&lt;/h4&gt;</code></pre></div></li>
 <li><p>Click on a building and activate BIN link</p></li>
-</ol>
+</ul>
 
 <h2 id="toc_16">Add widgets</h2>
 
-<ol>
+<ul>
 <li>On top level, switch to the Widgets panel</li>
-<li>Select ‘Add Widget’</li>
-</ol>
+<li>Select <code>Add Widget</code></li>
+</ul>
 
-<p>You’ll see four tabs, ‘Category’, ‘Histogram’, ‘Formula’ and ‘time series’ 
+<p>You&#39;ll see four tabs, <code>Category</code>, <code>Histogram</code>, <code>Formula</code> and <code>time series</code> 
 Check the following boxes: </p>
 
 <ul>
 <li>Histogram &gt; heightroof, num_floors</li>
-<li>Formula &gt; ‘point count’ or ‘polygon count’</li>
+<li>Formula &gt; <code>point count</code> or <code>polygon count</code></li>
 <li>Timeseries &gt; year<em>built</em>date</li>
 </ul>
 
@@ -601,15 +597,15 @@ Check the following boxes: </p>
 
 <h2 id="toc_18">Join zones to buildings</h2>
 
-<ol>
+<ul>
 <li>Click into layer, and click table name hyperlink below file name.</li>
-<li>Add a column to the greenpoint_buildings file named ‘zone’</li>
+<li>Add a column to the greenpoint_buildings file named <code>zone</code></li>
 <li>Add column</li>
-<li>name ‘zone_id’<br></li>
+<li>Name <code>zone_id</code><br></li>
 <li><p>Open SQL pane at bottom</p>
 
-<p>Update greenpoint<em>buildings SET zone</em>id = hurricane_ from hurricane<em>zones WHERE ST</em>Intersects(hurricane<em>zones.the</em>geom, greenpoint<em>buildings.the</em>geom)</p></li>
-</ol>
+<div><pre><code class="language-none">Update greenpoint_buildings SET zone_id = hurricane_ from hurricane_zones WHERE ST_Intersects(hurricane_zones.the_geom, greenpoint_buildings.the_geom)</code></pre></div></li>
+</ul>
 
 <p>This is the base code for that: </p>
 
