@@ -372,7 +372,7 @@ Select <code>Positron (labels below)</code> as the new basemap. </p>
 <h2 id="toc_2">Add Hurricane Zones</h2>
 
 <ul>
-<li>Download Hurricane Zones (<a href="https://team.carto.com/u/hollyorr/tables/jferzoco.hurricane_zones/public/map?redirected=true">link</a>)</li>
+<li>Download Hurricane Zones (<a href="https://team.carto.com/u/jferzoco/tables/hurricane_zones/public">link</a>)</li>
 <li>Hit <code>Download</code> button on interface<br></li>
 </ul>
 
@@ -428,7 +428,7 @@ Select <code>Positron (labels below)</code> as the new basemap. </p>
 <h2 id="toc_5">Add Evacuation Centers</h2>
 
 <ul>
-<li>Evacuation Centers (<a href="https://team.carto.com/u/hollyorr/tables/jferzoco.oem_hurricaneevacuationcenters_01june2013/public/map?redirected=true">link</a>)</li>
+<li>Evacuation Centers (<a href="https://team.carto.com/u/jferzoco/tables/oem_hurricaneevacuationcenters_01june2013/public">link</a>)</li>
 <li>Hit <code>Download</code> button on interface<br></li>
 <li>Choose CSV as format</li>
 <li>Click <code>Add</code> button on top of layer sidebar</li>
@@ -510,7 +510,7 @@ Go to <code>Analysis</code> tab</p>
 <h2 id="toc_11">Add Greenpoint Buildings</h2>
 
 <ul>
-<li>Buildings in Greenpoint (<a href="https://team.carto.com/u/hollyorr/tables/jferzoco.greenpoint_buildings/public/map?redirected=true">link</a>)<br></li>
+<li>Buildings in Greenpoint (<a href="https://team.carto.com/u/hollyorr/tables/greenpoint_buildings/public">link</a>)<br></li>
 <li>Hit <code>Download</code> button on interface<br></li>
 <li>Choose <code>.gpkg</code> as format</li>
 <li>Click <code>Add</code> button on top of layer sidebar</li>
@@ -520,7 +520,21 @@ Go to <code>Analysis</code> tab</p>
 <li>Double click new layer name and rename <code>Greenpoint Buildings</code></li>
 </ul>
 
-<h3 id="toc_12">Style buildings by zone</h3>
+<h3 id="toc_12">Populate values with Intersect - PostGIS Command</h3>
+
+<ul>
+<li>Click into layer, and click table name hyperlink below file name.</li>
+<li>Add a column to the greenpoint_buildings file named <code>zone_id</code> </li>
+<li>Open SQL pane at bottom</li>
+<li><p>Use <a href="http://postgis.org/docs/ST_Intersects.html">ST_Intersects</a>:</p>
+
+<div><pre><code class="language-none">Update {table} SET {new_column} = {source_column) from {source_table} WHERE ST_Intersects(source_table.the_geom, main_table.the_geom)</code></pre></div></li>
+<li><p>Like this:</p>
+
+<div><pre><code class="language-none">Update greenpoint_buildings SET zone_id = hurricane_ from hurricane_zones WHERE ST_Intersects(hurricane_zones.the_geom, greenpoint_buildings.the_geom)</code></pre></div></li>
+</ul>
+
+<h3 id="toc_13">Style buildings by zone</h3>
 
 <ul>
 <li>In the bottom of the style panel, flip this switch to edit the CartoCSS in the backend:</li>
@@ -534,13 +548,6 @@ polygon-fill: ramp([zone], (#bababa, #dc7e5e, #e39d5d, #e9e066, #bed066, #98c576
   line-color: #FFFFFF;
   line-opacity: 0.5;
 }</code></pre></div></li>
-</ul>
-
-<h3 id="toc_13">Decrease opacity of the hurricane zones</h3>
-
-<ul>
-<li>Go to layer: Hurricane zones</li>
-<li>Style &gt; Cartocss &gt; edit line: <code>polygon-opacity: 0.4</code>;</li>
 </ul>
 
 <h3 id="toc_14">Add popup to Buildings</h3>
@@ -590,22 +597,7 @@ polygon-fill: ramp([zone], (#bababa, #dc7e5e, #e39d5d, #e9e066, #bed066, #98c576
 <li>Timeseries &gt; <code>year_built_date</code></li>
 </ul>
 
-<h3 id="toc_16">Clean data</h3>
-
-<p>Fix time series problem:</p>
-
-<ul>
-<li><p>Go to SQL pane and run the following query:</p>
-
-<div><pre><code class="language-none">SELECT * FROM hollyorr.greenpoint_buildings WHERE year_built_date = &#39;0001-01-01T00:00:00.000Z&#39;</code></pre></div></li>
-<li><p>Then:</p>
-
-<div><pre><code class="language-none">SELECT * FROM hollyorr.greenpoint_buildings WHERE year_built_date &lt;&gt; &#39;0001-01-01T00:00:00.000Z&#39;</code></pre></div></li>
-<li><p>Export and re-import the new dataset</p></li>
-<li><p>Create time series from new dataset</p></li>
-</ul>
-
-<h3 id="toc_17">Style Widgets</h3>
+<h3 id="toc_16">Style Widgets</h3>
 
 <ul>
 <li>Edit the widget:</li>
@@ -623,18 +615,19 @@ polygon-fill: ramp([zone], (#bababa, #dc7e5e, #e39d5d, #e9e066, #bed066, #98c576
 
 <p><img src="img/dynamic.png" alt=""></p>
 
-<h2 id="toc_18">Extra: PostGIS Command Example</h2>
+<h2 id="toc_17">Extra: Clean data - time series</h2>
+
+<p>Fix time series problem:</p>
 
 <ul>
-<li>Click into layer, and click table name hyperlink below file name.</li>
-<li>Add a column to the greenpoint_buildings file named <code>zone_id</code> </li>
-<li>Open SQL pane at bottom</li>
-<li><p>Use <a href="http://postgis.org/docs/ST_Intersects.html">ST_Intersects</a>:</p>
+<li><p>Go to SQL pane and run the following query:</p>
 
-<div><pre><code class="language-none">Update {table} SET {new_column} = {source_column) from {source_table} WHERE ST_Intersects(source_table.the_geom, main_table.the_geom)</code></pre></div></li>
-<li><p>Like this:</p>
+<div><pre><code class="language-none">SELECT * FROM hollyorr.greenpoint_buildings WHERE year_built_date = &#39;0001-01-01T00:00:00.000Z&#39;</code></pre></div></li>
+<li><p>Then:</p>
 
-<div><pre><code class="language-none">Update greenpoint_buildings SET zone_id = hurricane_ from hurricane_zones WHERE ST_Intersects(hurricane_zones.the_geom, greenpoint_buildings.the_geom)</code></pre></div></li>
+<div><pre><code class="language-none">SELECT * FROM hollyorr.greenpoint_buildings WHERE year_built_date &lt;&gt; &#39;0001-01-01T00:00:00.000Z&#39;</code></pre></div></li>
+<li><p>Export and re-import the new dataset</p></li>
+<li><p>Create time series from new dataset</p></li>
 </ul>
 
 
