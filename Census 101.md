@@ -12,8 +12,8 @@ Use the **[The Data Observatory Catalog](https://cartodb.github.io/bigmetadata/i
 ## Australia
 
 [Australian Bureau of Stastics](https://www.abs.gov.au/geography)
-Latest on DO is 2011
-Latest available in Australia is 2016 - ask for update
+* Latest on DO is 2011
+* Latest available is 2016 - ask for update
 
 Diagram 1: ASGS ABS Structures:
 
@@ -114,8 +114,8 @@ All ASGS publications can be found on the [ABS Geography Publications](https://w
 
 ## Brazil
 
-Latest on DO is 2010
-Latest available in Australia is 2016 - ask for update
+* Latest on DO is 2010
+* Latest available is 2016 - ask for update
 
 https://ww2.ibge.gov.br/english/geociencias/default_prod.shtm
 https://censo2010.ibge.gov.br/
@@ -125,12 +125,90 @@ Run these to see the differences
 
 ## Canada
 
+* Latest on DO is 2011
+* Latest available is 2016 - ask for update
+
+**Links:**
+
+* [https://docs.google.com/document/d/1fbSi9IigGR_MGQjsQXw3YQfRn6T-aVn2xBI-qIPbeLw/edit](https://docs.google.com/document/d/1fbSi9IigGR_MGQjsQXw3YQfRn6T-aVn2xBI-qIPbeLw/edit)
+* [https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-eng.cfm](https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-eng.cfm)
+
+![census hierachy](img/ca_census_breakdown.png)
+
+**CMA** 
+A census metropolitan area (CMA) or a census agglomeration (CA) is formed by one or more adjacent municipalities centred on a population centre (known as the core). A CMA must have a total population of at least 100,000 of which 50,000 or more must live in the core based on adjusted data from the previous Census of Population Program. A CA must have a core population of at least 10,000 also based on data from the previous Census of Population Program.
+
+To be included in the CMA or CA, other adjacent municipalities must have a high degree of integration with the core, as measured by commuting flows derived from data on place of work from the previous Census Program.
+
+**CSD**
+Census subdivision (CSD) is the general term for municipalities (as determined by provincial/territorial legislation) or areas treated as municipal equivalents for statistical purposes (e.g., Indian reserves, Indian settlements and unorganized territories). Municipal status is defined by laws in effect in each province and territory in Canada.
+
+**CT**
+Census tracts (CTs) are small, relatively stable geographic areas that usually have a population of less than 10,000 persons, based on data from the previous Census of Population Program. They are located in census metropolitan areas and in census agglomerations that had a core population of 50,000 or more in the previous census.
+
+**DA**
+A dissemination area (DA) is a small, relatively stable geographic unit composed of one or more adjacent dissemination blocks with an average population of 400 to 700 persons based on data from the previous Census of Population Program. It is the smallest standard geographic area for which all census data are disseminated. Dissemination areas cover all the territory of Canada.
+
+**DB**
+A dissemination block (DB) is an area bounded on all sides by roads and/or boundaries of standard geographic areas. The dissemination block is the smallest geographic area for which population and dwelling counts are disseminated. Dissemination blocks cover all the territory of Canada.
+
 
 ## European Union
 
+**Links**
+
+* https://eurogeographics.org/
+* https://en.wikipedia.org/wiki/Nomenclature_of_Territorial_Units_for_Statistics
+
+[NUTS Level 1](https://en.wikipedia.org/wiki/First-level_NUTS_of_the_European_Union):
+
+![census hierachy](img/nuts1.png)
+
+[NUTS Level 2](https://en.wikipedia.org/wiki/Category:NUTS_2_statistical_regions_of_the_European_Union):
+
+![census hierachy](img/nuts2.png)
+
+[NUTS Level 3](https://en.wikipedia.org/wiki/Category:NUTS_3_statistical_regions_of_the_European_Union):
+
+![census hierachy](img/nuts3.png)
+
 ## France
 
+https://www.insee.fr/en/metadonnees/source/serie/s1321/
+
+* Latest on DO is 2013
+* Latest available 2015 - ask for update
+
+**IRIS and Commune areas**
+
+In order to prepare for the dissemination of the 1999 population census, INSEE developed a system for dividing the country into units of equal size, known as IRIS2000. In French, IRIS is an acronym of ‘aggregated units for statistical information’, and the 2000 refers to the target size of 2000 residents per basic unit.
+
+Since that time IRIS (the term which has replaced IRIS2000) has represented the fundamental unit for dissemination of infra-municipal data. These units must respect geographic and demographic criteria and have borders which are clearly identifiable and stable in the long term.
+
+Towns with more than 10,000 inhabitants, and a large proportion of towns with between 5,000 and 10,000 inhabitants, are divided into several IRIS units. This separation represents a division of the territory. France is composed of around 16,100 IRIS, of which 650 are in the overseas departments.
+
+By extension, in order to cover the whole of the country, all towns not divided into IRIS units constitute IRIS units in themselves.
+
+There are 3 types of IRIS unit:
+
+**the residential IRIS:** population generally falls between 1,800 and 5,000. The unit is homogeneous in terms of living environment and the boundaries of the unit are based on the major dividing lines provided by the urban fabric (main roads, railways, bodies of water etc.)
+
+**the business IRIS:** containing more than 1,000 employees, with at least twice as many employees as other residents.
+
+**the miscellaneous IRIS units:** specific large zones which are sparsely inhabited and have a large surface area (leisure parks, ports, forests etc.).
+As of January 1st 2008, 92% of IRIS units were residential, with 5% business. Since their creation, the demographic characteristics of certain IRIS units may have evolved, although their classification will not have been updated.
+
+In 2008 a very partial reworking of the division system was undertaken to take into account major developments in the road network or demographics. This reworking was limited to around 100 IRIS units, in order to preserve continuity in the data publication series.
+
+Division of a territory into IRIS units may be affected by modifications in the geography of the municipalities (merging of towns or villages, founding or repopulation of municipalities, land exchanges). So it is useful to specify the year of reference, for example by noting either IRIS-geography 1999 or IRIS-geography 2008.
+
 ## Mexico
+
+* https://www.inegi.org.mx/
+* http://en.www.inegi.org.mx/temas/mg/
+
+* Latest on DO is 2015
+* Latest available 2018 - ask for update
 
 ## United Kingdom
 
